@@ -3,22 +3,17 @@ ContentModule = SC.Application.create({
 	_bootstrap: function() {
 		$('body').append($('<div class="typo3-rightarea" />'));
 		$('body').append($('<div class="typo3-actionmenu" />'));
-		//$('body').append($('<div class="typo3-breadcrumbmenu" />'));
+		$('body').append($('<div class="typo3-breadcrumbmenu" />'));
 		$('body').addClass('typo3-backend');
 
-		/*var breadcrumbMenuView = SC.View.create({
-			template: Handlebars.compile('{{content}} {{#collection binding="people.content"}} {{/collection}}!'),
-			content: 'Foo',
-			people: ContentModule.peopleController
+		var breadcrumbMenuView = SC.View.create({
+			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.BlockSelectionController"}} {{content.id}} {{/collection}}!'),
 		});
-		breadcrumbMenuView.appendTo($('.typo3-breadcrumbmenu'));*/
+		breadcrumbMenuView.appendTo($('.typo3-breadcrumbmenu'));
+		//$('.typo3-breadcrumbmenu').append(breadcrumbMenuView.$());
 	},
-	_onBlockSelectionChange: function(selectedBlocks) {
-		ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
+	_onBlockSelectionChange: function(selectedBlocks) {	ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
 	}
-});
-ContentModule.peopleController = SC.ArrayProxy.create({
-	content: ['Steph', 'Tom', 'Ryan', 'Chris', 'Jill']
 });
 
 
@@ -27,9 +22,10 @@ ContentModule.BlockSelectionController = SC.ArrayProxy.create({
 	content: [],
 
 	updateSelectedBlocks: function(selectedBlocks) {
-			// Remove array
 		this.content.set('[]', selectedBlocks);
 	}
 });
 
-ContentModule._bootstrap();
+SC.$(document).ready(function() {
+	ContentModule._bootstrap();
+});
