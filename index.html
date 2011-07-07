@@ -13,7 +13,7 @@
 
 		Aloha.settings = {
 			bundles: {
-				phoenix: 'file:///Volumes/data/Users/sebastian/Downloads/sproutcore-starter-kit-3cadc75/js/alohaplugins'
+				phoenix: 'http://localhost/sproutcoretest/js/alohaplugins'
 			}
 		};
 	</script>
@@ -38,6 +38,7 @@ body.typo3-backend {
 	<li>Management</li>
 </ul>
 <div class="typo3-clear"></div>
+
 
 
 
@@ -309,5 +310,13 @@ body.typo3-backend {
   <script src="js/libs/sproutcore-2.0.beta.1.js"></script>
   <script src="js/app.js"></script>
 
+<div class="typo3-breadcrumbmenu">
+<script type="text/html">
+{{#collection contentBinding="ContentModule.BlockSelectionController"}}
+  Hi, {{content.id}}!
+{{/collection}}
+
+</script>
+</div>
 	</body>
 </html>
