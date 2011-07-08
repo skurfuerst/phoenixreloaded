@@ -11,10 +11,8 @@ function(Plugin, block) {
 				BlockManager.registerBlockType('PluginBlock', block.PluginBlock);
         		BlockManager.bind('block-selection-change', ContentModule._onBlockSelectionChange, ContentModule);
         	});
-            // Executed on plugin initialization
         },
         destroy: function() {
-            // Executed when this plugin is unloaded
         }
     });
 });

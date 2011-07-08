@@ -7,6 +7,9 @@ ContentModule = SC.Application.create({
 		this._initializeToolbar();
 		this._initializeFooter();
 
+		$('body').addClass('t3-ui-controls-active'); // TODO: should be only set when header and property panel is visible
+
+
 		$('body').addClass('t3-backend');
 	},
 
@@ -42,7 +45,8 @@ ContentModule = SC.Application.create({
 			],
 			right: [
 				ContentModule.Button.extend({
-					label: 'Revert'
+					label: 'Revert',
+					disabledBinding: 'ContentModule.ChangesController.noChanges'
 				}),
 				ContentModule.MenuSeparator,
 				ContentModule.Button.extend({
@@ -183,7 +187,7 @@ ContentModule.BlockSelectionController = SC.Object.create({
 		if (blocks === undefined || blocks === null) {
 			blocks = [];
 		}
-		
+
 		blocks = $.map(blocks, function(block) {
 			return {
 				id: block.id,
