@@ -34,20 +34,32 @@ function(block) {
 	exports.PluginBlock = exports.AbstractBlock.extend({
 		title: 'Plugin',
 		getSchema: function() {
-			return {
-				/*visible: {
-					type: 'string', // TODO: boolean
-					label: 'Visible'
-				},*/
-				'package': {
-					type: 'string',
-					label: 'Package'
+			return [
+				{
+					key: 'Plugin Settings',
+					properties: [
+						{
+							key: 'package',
+							type: 'string',
+							label: 'Package'
+						}, {
+							key: 'controller',
+							type: 'string',
+							label: 'Controller'
+						}
+					]
 				},
-				'controller': {
-					type: 'string',
-					label: 'Controller'
-				}
-			};
+				{
+					key: 'Access',
+					properties: [
+						{
+							key: 'visibility',
+							type: 'boolean',
+							label: 'Visibility'
+						}
+					]
+				},
+			];
 		}
 	});
 	return exports;
