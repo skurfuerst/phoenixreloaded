@@ -199,6 +199,10 @@ ContentModule.BlockSelectionController = SC.Object.create({
 	blocks: [],
 
 	updateSelection: function(blocks) {
+		if (this._updating) {
+			return;
+		}
+		this._updating = true;
 		if (blocks === undefined || blocks === null) {
 			blocks = [];
 		}
@@ -212,6 +216,7 @@ ContentModule.BlockSelectionController = SC.Object.create({
 			});
 		}
 		this.set('blocks', blocks);
+		this._updating = false;
 	},
 
 	selectedBlock: function() {
@@ -226,8 +231,10 @@ ContentModule.BlockSelectionController = SC.Object.create({
 	selectItem: function(item) {
 		var block = Aloha.Block.BlockManager.getBlock(item.id);
 		if (block) {
-			console.log(block);
+			// FIXME !!! This is to prevent the event triggering a refresh of the blocks which trigger an event and kill the selection
+			this._updating = true;
 			block.activate();
+			this._updating = false;
 		}
 	}
 });
