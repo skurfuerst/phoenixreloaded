@@ -2,13 +2,17 @@
 	clear:both;
 }
 .typo3-topbar {
-	width:100%;
-	background:-moz-linear-gradient(top,#555,#222);
-	height:25px;
-	position:fixed;
-	top:0;
-	left:0;
-	z-index:10010;
+	box-shadow: 0 1px 3px #000000;
+	-moz-box-shadow: 0 1px 3px #000000;
+	-webkit-box-shadow: 0 1px 3px #000000;
+    background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
+    height: 25px;
+    left: 0;
+    line-height: 25px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10010;
 }
 
 .typo3-topbar li {
@@ -17,45 +21,47 @@
 	height:100%;
 	padding-left:20px;
 	padding-right:20px;
-	font-weight:bold;
-	color:white;
+	color: #ffffff;
 }
 
 .typo3-topbar li.typo3-active {
-	background:-moz-linear-gradient(top,#AAA,#DDD);
-	color:black;
+	background: -moz-linear-gradient(center top , #373737, #555555) repeat scroll 0 0 transparent;
+	background: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#373737), to(#555555));
+	text-shadow: 1px 0 6px #FF8700, -1px -1px 0 #000000;
 }
 
 .typo3-rightarea {
-	position:fixed;
-	right:0;
-	top:0;
-	height:100%;
-	width:200px;
-	background:-moz-linear-gradient(top,#222,#000);
-	z-index:10000;
-
-	margin-top:25px;
+	-moz-box-shadow: -2px 0 3px rgba(0, 0, 0, 0.5);
+    -moz-box-sizing: border-box;
+    background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
+    height: 100%;
+    margin-top: 25px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 200px;
+    z-index: 10011;
 }
 body {
 	margin-right:200px;
 }
 
 .typo3-actionmenu {
-	position:fixed;
-	top:25px;
-	left:0;
-	right:200px; /* see .typo3-rightarea::width */
-	height:20px;
-	background:-moz-linear-gradient(top,#DDD,#FFF);
-	z-index:10011;
+	 -moz-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
+    background: -moz-linear-gradient(center top , #555555, #373737) repeat scroll 0 0 transparent;
+    height: 20px;
+    left: 0;
+    position: fixed;
+    right: 200px;
+    top: 25px;
+    z-index: 10012;
 }
 .typo3-breadcrumbmenu {
-	position:fixed;
-	bottom:0;
-	left:0;
-	right:200px; /* see .typo3-rightarea::width */
-	height:20px;
-	background:-moz-linear-gradient(top,#111,#000);
-	z-index:10011;
+	background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
+    bottom: 0;
+    height: 20px;
+    left: 0;
+    position: fixed;
+    right: 200px;
+    z-index: 10012;
 }
