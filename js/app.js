@@ -7,6 +7,9 @@ ContentModule = SC.Application.create({
 		this._initializeToolbar();
 		this._initializeFooter();
 
+		$('body').addClass('t3-ui-controls-active'); // TODO: should be only set when header and property panel is visible
+
+
 		$('body').addClass('t3-backend');
 	},
 
