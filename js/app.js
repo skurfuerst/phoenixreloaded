@@ -14,10 +14,8 @@ ContentModule = SC.Application.create({
 		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
 		var propertyPanelView = SC.View.create({
-			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.CurrentlyActivatedBlockSchema.schema"}}<h2>{{content.key}}</h2> {{collection ContentModule.ActivatedBlockSchemaProperties tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} {{/collection}} </form>'),
-			selectPropertyEditingWidget: function() {
-				return 'test';
-			}
+			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlock.schema"}}<h2>{{content.key}}</h2> {{collection ContentModule.ActivatedBlockSchemaProperties tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} {{/collection}} </form>')
+
 		});
 
 		/*var propertyPanelView = SC.View.create({
@@ -44,33 +42,37 @@ ContentModule = SC.Application.create({
 			],
 			right: [
 				ContentModule.Button.extend({
+					label: 'Revert'
+				}),
+				ContentModule.MenuSeparator,
+				ContentModule.Button.extend({
 					label: 'Save',
 					disabledBinding: 'ContentModule.ChangesController.noChanges'
-				}),
-				ContentModule.Button.extend({
-					label: 'Revert'
 				})
 			]
 		});
 		toolbar.appendTo($('body'));
-
 	},
 
 	_initializeFooter: function() {
 		var breadcrumb = ContentModule.Breadcrumb.extend({
-			contentBinding: 'ContentModule.BlockSelectionController'
+			contentBinding: 'ContentModule.BlockSelectionController.blocks'
 		});
 		var footer = ContentModule.Toolbar.create({
 			elementId: 't3-footer',
 			left: [
+				ContentModule.Button.extend({
+					label: 'Nodes'
+				}),
+				ContentModule.MenuSeparator,
 				breadcrumb
 			]
 		});
 		footer.appendTo($('body'));
 	},
 
-	_onBlockSelectionChange: function(selectedBlocks) {
-		ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
+	_onBlockSelectionChange: function(blocks) {
+		ContentModule.BlockSelectionController.updateSelection(blocks);
 	}
 
 });
@@ -78,7 +80,20 @@ ContentModule = SC.Application.create({
 ContentModule.Breadcrumb = SC.View.extend({
 	tagName: 'ul',
 	classNames: ['t3-breadcrumb', 'aloha-block-do-not-deactivate'],
-	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.content" tagName="li"}}{{content.title}}{{/collection}}')
+	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.content" tagName="li"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
+});
+
+ContentModule.Breadcrumb.Item = SC.View.extend({
+	tagName: 'a',
+	href: '#',
+	// TODO Don't need to bind here actually
+	attributeBindings: ['href'],
+	template: SC.Handlebars.compile('{{item.title}}')
+});
+
+ContentModule.MenuSeparator = SC.View.extend({
+	tagName: 'div',
+	classNames: ['t3-menu-separator']
 });
 
 ContentModule.Toolbar = SC.View.extend({
@@ -161,16 +176,30 @@ Foo\
 </div>')
 });
 
-ContentModule.CurrentlyActivatedBlockSchema = SC.Object.create({
-	schema: [],
+ContentModule.BlockSelectionController = SC.Object.create({
+	blocks: [],
 
-	setCurrentSchema: function(schema) {
-		if (schema === null || schema === undefined) {
-			schema = [];
+	updateSelection: function(blocks) {
+		if (blocks === undefined || blocks === null) {
+			blocks = [];
 		}
-		this.set('schema', schema);
-	}
+		
+		blocks = $.map(blocks, function(block) {
+			return {
+				id: block.id,
+				title: block.title,
+				schema: block.getSchema()
+			};
+		});
+		this.set('blocks', blocks);
+	},
+
+	selectedBlock: function() {
+		var blocks = this.get('blocks');
+		return blocks.length > 0 ? SC.Object.create(blocks[0]): null;
+	}.property('blocks')
 });
+
 
 ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
 	 itemViewClass: SC.View.extend({
@@ -182,42 +211,17 @@ ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
 			  } else {
 				  return 'ContentModule.templateTest';
 			  }
-			  
+
         }.property('type')
     })
 
 });
 
-ContentModule.SchemaPropertiesView = SC.View.extend({
-
-	schemaTypeSelector: function() {
-		var content = this.get('content');
-		if (content.type === 'string') {
-			return SC.TextField.extend();
-		} else {
-			return '';
-		}
-
-
-	}.property('type')
-});
-
-ContentModule.BlockSelectionController = SC.ArrayProxy.create({
-	content: [],
-
-	updateSelectedBlocks: function(selectedBlocks) {
-		this.set('[]', selectedBlocks);
-		if (selectedBlocks.length > 0) {
-			ContentModule.CurrentlyActivatedBlockSchema.setCurrentSchema(selectedBlocks[0].getSchema());
-		} else {
-			ContentModule.CurrentlyActivatedBlockSchema.setCurrentSchema(null);
-		}
-	}
-});
 
 SC.$(document).ready(function() {
 	ContentModule._bootstrap();
 });
+
 
 
 Handlebars.registerHelper("debug", function(optionalValue) {
