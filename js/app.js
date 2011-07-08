@@ -1,8 +1,8 @@
 var ContentModule;
 ContentModule = SC.Application.create({
 	_bootstrap: function() {
-		SC.TEMPLATES['ContentModule.templatePropertyString'] = SC.Handlebars.compile('<input type="text" />');
-		SC.TEMPLATES['ContentModule.templateTest'] = SC.Handlebars.compile('<input type="checkbox" />');
+		SC.TEMPLATES['ContentModule.templateProperty_string'] = SC.Handlebars.compile('<input type="text" value="{{data}}" />');
+		SC.TEMPLATES['ContentModule.templateProperty_boolean'] = SC.Handlebars.compile('<input type="checkbox" />');
 		this._initializePropertyPanel();
 		this._initializeToolbar();
 		this._initializeFooter();
@@ -194,9 +194,13 @@ ContentModule.BlockSelectionController = SC.Object.create({
 		this.set('blocks', blocks);
 	},
 
-	selectedBlock: function() {
+	getSelectedBlock: function() {
 		var blocks = this.get('blocks');
 		return blocks.length > 0 ? SC.Object.create(blocks[0]): null;
+	},
+
+	selectedBlock: function() {
+		this.getSelectedBlock();
 	}.property('blocks')
 });
 
@@ -205,12 +209,11 @@ ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
 	 itemViewClass: SC.View.extend({
         templateName: function() {
 			  var content = this.get('content');
-			  console.log(content);
-			  if (content.type === 'string') {
-				  return 'ContentModule.templatePropertyString';
-			  } else {
-				  return 'ContentModule.templateTest';
-			  }
+
+			  Aloha.Block.BlockManager.getBlock(ContentModule.BlockSelectionController.getSelectedBlock());
+			  
+			  return 'ContentModule.templateProperty_'+ content.type;
+
 
         }.property('type')
     })
