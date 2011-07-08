@@ -14,7 +14,7 @@ function(Plugin, block) {
 
 				Aloha.bind("aloha-editable-deactivated", function(event, data) {
 					var editable = data.editable;
-					if (!editable.isModified()) {
+					if (!editable || !editable.isModified()) {
 						return;
 					}
 
@@ -22,7 +22,7 @@ function(Plugin, block) {
 				});
 				Aloha.bind("aloha-smart-content-changed", function(event, data) {
 					var editable = data.editable;
-					if (!editable.isModified()) {
+					if (!editable || !editable.isModified()) {
 						return;
 					}
 
