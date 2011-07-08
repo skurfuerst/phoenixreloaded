@@ -11,38 +11,8 @@ ContentModule = SC.Application.create({
 	_initializePropertyPanel: function() {
 		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
-		var propertyPanelView = SC.View.create({ //
-			template: SC.Handlebars.compile('A{{#each schema}}\
-XX{{key}}{{label}} {{thestuff}}\
-x{{#each thestuff}} ASDF {{/each}}y\
-{{/each}}'),
-			schema: [
-				{
-					key: 'Plugin Settings',
-					label: 'huhu',
-					thestuff: [
-						{
-							key: 'package',
-							type: 'string',
-							label: 'Package'
-						}, {
-							key: 'controller',
-							type: 'string',
-							label: 'Controller'
-						}
-					]
-				},
-				{
-					key: 'Access',
-					thestuff: [
-						{
-							key: 'visibility',
-							type: 'boolean',
-							label: 'Visibility'
-						}
-					]
-				},
-			]
+		var propertyPanelView = SC.View.create({
+			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.CurrentlyActivatedBlockSchema.schema"}}<h2>{{content.key}}</h2> {{#each content.properties}}<div class="t3-propertypanel-field"> {{key}} </div>{{/each}} {{/collection}} </form>')
 		});
 
 		/*var propertyPanelView = SC.View.create({
@@ -173,14 +143,14 @@ Foo\
 </div>')
 });
 
-ContentModule.CurrentlyActivatedBlockSchema = SC.ArrayProxy.create({
-	content: [],
+ContentModule.CurrentlyActivatedBlockSchema = SC.Object.create({
+	schema: [],
 
 	setCurrentSchema: function(schema) {
 		if (schema === null || schema === undefined) {
 			schema = [];
 		}
-		this.content.set('[]', schema);
+		this.set('schema', schema);
 	}
 });
 
@@ -189,7 +159,7 @@ ContentModule.BlockSelectionController = SC.ArrayProxy.create({
 	content: [],
 
 	updateSelectedBlocks: function(selectedBlocks) {
-		this.content.set('[]', selectedBlocks);
+		this.set('[]', selectedBlocks);
 		if (selectedBlocks.length > 0) {
 			ContentModule.CurrentlyActivatedBlockSchema.setCurrentSchema(selectedBlocks[0].getSchema());
 		} else {
