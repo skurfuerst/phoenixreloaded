@@ -2,6 +2,11 @@
 body {
   margin-right: 200px; }
 
+#t3-footer,
+#t3-toolbar,
+#t3-ui-rightarea {
+  font-family: Arial, sans-serif; }
+
 .t3-clear {
   clear: both; }
 
@@ -49,27 +54,38 @@ body {
   width: 200px;
   z-index: 10011; }
 
-.t3-propertypanel-form {
-  padding: 10px; }
-  .t3-propertypanel-form fieldset {
-    border: 0; }
-  .t3-propertypanel-form label {
-    color: #ffffff;
-    font-weight: normal; }
-  .t3-propertypanel-form input[type=text] {
-    height: 20px;
-    line-height: 20px;
-    border: 1px solid #000000;
-    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 1px 3px black inset;
-    background: #cacaca;
-    border-radius: 4px 4px 4px 4px;
-    -moz-border-radius: 4px 4px 4px 4px;
-    -webkit-border-radius: 4px 4px 4px 4px; }
-    .t3-propertypanel-form input[type=text]:focus {
-      -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 1px 3px black inset, 0px 1px 3px rgba(255, 135, 0, 0.6) inset, 0px -1px 2px rgba(255, 135, 0, 0.6) inset, 1px 0px 2px rgba(255, 135, 0, 0.6) inset, -1px 0px 2px rgba(255, 135, 0, 0.6) inset; }
+.t3-propertypanel-form fieldset {
+  border: 0; }
+  .t3-propertypanel-form fieldset .t3-propertypanel-field {
+    padding: 10px; }
+.t3-propertypanel-form h2 {
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 0 10px;
+  height: 25px;
+  line-height: 25px;
+  background: -moz-linear-gradient(center top, #555555, #373737) repeat scroll 0 0 transparent;
+  color: #ffffff;
+  font-weight: normal; }
+.t3-propertypanel-form label {
+  color: #ffffff;
+  font-weight: normal; }
+.t3-propertypanel-form input[type=text] {
+  height: 20px;
+  line-height: 20px;
+  border: 1px solid #000000;
+  -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 1px 3px black inset;
+  background: #cacaca;
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px; }
+  .t3-propertypanel-form input[type=text]:focus {
+    -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1), 0px 1px 3px black inset, 0px 1px 3px rgba(255, 135, 0, 0.6) inset, 0px -1px 2px rgba(255, 135, 0, 0.6) inset, 1px 0px 2px rgba(255, 135, 0, 0.6) inset, -1px 0px 2px rgba(255, 135, 0, 0.6) inset; }
 
 /*** Toolbar ***/
-.t3-toolbar {
+#t3-toolbar {
   box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);

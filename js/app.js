@@ -9,6 +9,7 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializePropertyPanel: function() {
+	return;
 		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
 		var propertyPanelView = SC.View.create({ //

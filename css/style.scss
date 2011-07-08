@@ -25,6 +25,11 @@ $footer-height: 25px;
 body {
 	margin-right: $property-panel-width;
 }
+#t3-footer,
+#t3-toolbar,
+#t3-ui-rightarea {
+	font-family: Arial, sans-serif;
+}
 .t3-clear {
 	clear:both;
 }
@@ -70,9 +75,21 @@ body {
     z-index: 10011;
 }
 .t3-propertypanel-form {
-	padding: 10px;
 	fieldset {
 		border: 0;
+		.t3-propertypanel-field {
+			padding: 10px;
+		}
+	}
+	h2 {
+		width: 100%;
+		@include box-sizing;
+		padding: 0 10px;
+		height: 25px;
+		line-height: 25px;
+    background: -moz-linear-gradient(center top , #555555, #373737) repeat scroll 0 0 transparent;
+	    color: #ffffff;
+	    font-weight: normal;
 	}
 	label {
 		color: #ffffff;
@@ -92,7 +109,7 @@ body {
 }
 
 /*** Toolbar ***/
-.t3-toolbar {
+#t3-toolbar {
 	@include box-shadow(-1px, 2px, 3px, rgba(0, 0, 0, 0.5));
     background: -moz-linear-gradient(center top , #555555, #373737) repeat scroll 0 0 transparent;
     height: $toolbar-height;
