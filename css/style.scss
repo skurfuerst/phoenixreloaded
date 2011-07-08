@@ -95,7 +95,7 @@ body {
 		color: #ffffff;
 		font-weight: normal;
 	}
-	input[type=text] {	
+	input[type=text] {
 		height: 20px;
 		line-height: 20px;
 		border: 1px solid #000000;
@@ -178,4 +178,45 @@ button.t3-button:focus {
     right: $property-panel-width;
     z-index: 10012;
     @include box-shadow(-1px, -2px, 3px, rgba(0, 0, 0, 0.5))
+}
+
+.aloha-block:hover > .t3-add-below-handle,
+.aloha-block-active > .t3-add-below-handle {
+	display:block;
+}
+.t3-add-below-handle {
+	position:absolute;
+	right:-1px;
+	bottom:-13px;
+	width:44px;
+	height:12px;
+	overflow:hidden;
+	font-size:9px;
+	display:none;
+	background:url(../img/toolbar-draghandle.gif);
+	border-bottom:1px solid #CCC;
+	border-left:1px solid #CCC;
+	border-right:1px solid #CCC;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+}
+
+.aloha-block:hover > .t3-add-above-handle,
+.aloha-block-active > .t3-add-above-handle {
+	display:block;
+}
+.t3-add-above-handle {
+	position:absolute;
+	right:-1px;
+	top:-13px;
+	width:44px;
+	height:12px;
+	overflow:hidden;
+	font-size:9px;
+	display:none;
+	border-top:1px solid #CCC;
+	border-left:1px solid #CCC;
+	border-right:1px solid #CCC;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
 }
