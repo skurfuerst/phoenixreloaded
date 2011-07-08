@@ -15,10 +15,10 @@
 			plugins: {
 				block: {
 					defaults: {
-						'.typo3-plugin': {
+						'.t3-plugin': {
 							'block-type': 'PluginBlock'
 						},
-						'.typo3-text': {
+						'.t3-text': {
 							'block-type': 'TextBlock'
 						}
 					},
@@ -30,19 +30,18 @@
 			}
 		};
 	</script>
-<script src="js/libs/aloha/src/require.js" data-main="js/libs/aloha/src/aloha.js" id="aloha-script-include" data-plugins="common/format,common/block,common/paste,phoenix/phoenixintegration"></script>
+	<script src="js/libs/aloha/src/require.js" data-main="js/libs/aloha/src/aloha.js" id="aloha-script-include" data-plugins="common/format,common/block,common/paste,phoenix/phoenixintegration"></script>
 
 	<link rel="stylesheet" href="js/libs/aloha/src/aloha.css" type="text/css">
 	<link rel="stylesheet" href="index.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 
-<!-- user stylesheet adjustments -->
-<style>
-body.typo3-backend {
-	margin-top:40px;
-}
-</style>
-
+	<!-- user stylesheet adjustments -->
+	<style>
+	body.t3-backend {
+		margin-top:40px;
+	}
+	</style>
 </head>
 <body typeof="typo3:TYPO3:Page" about="/sites/phoenixdemotypo3org/homepage" >
 
@@ -64,13 +63,13 @@ body.typo3-backend {
 							<ul>
 								<li>Workspace: live</li>
 
-								<li><a target="_top" href="http://dev.typo3v5.local/typo3">Backend login</a></li>
+								<li><a target="_top" href="/typo3">Backend login</a></li>
 							</ul>
 						</div>
 						<div id="searchBox">
 							<form id="search_form" method="post" action="/">
 								<input type="text" id="inputText" value="Future Search" />
-								<input type="image" src="http://dev.typo3v5.local/_Resources/Static/Packages/PhoenixDemoTypo3Org/Images/bg_searchButton.gif" width="20" height="20" id="inputButton" alt="Search" title="Search" />
+								<input type="image" src="website/Images/bg_searchButton.gif" width="20" height="20" id="inputButton" alt="Search" title="Search" />
 							</form>
 
 						</div>
@@ -167,7 +166,7 @@ body.typo3-backend {
 						</div>
 						<div id="mainContent">
 
-<div class="typo3-contentelement typo3-text">
+<div class="t3-contentelement t3-text">
 
 <h1>I'm here to be defaced ;-)</h1>
 <div>This is the TYPO3 Phoenix demo website. It's there to let you experiment with the features
@@ -175,7 +174,7 @@ body.typo3-backend {
 						</div>
 </div>
 
-<div class="typo3-contentelement typo3-plugin" data-package="PhoenixDemoTypo3Org" data-controller="Registration" about="/sites/phoenixdemotypo3org/homepage/main/registration"><h2>Try me</h2>
+<div class="t3-contentelement t3-plugin" data-package="PhoenixDemoTypo3Org" data-controller="Registration" about="/sites/phoenixdemotypo3org/homepage/main/registration"><h2>Try me</h2>
 
 <p>Just create a demo account and try out our latest development of the TYPO3 Phoenix user interface. Get a first impression of Aloha, the content editor, and try out the simple publishing mechanism based on workspaces.</p>
 <form method="post" action="homepage.html?f3_phoenixdemotypo3org_typoscript_registration%5B%40action%5D=createaccount&amp;f3_phoenixdemotypo3org_typoscript_registration%5B%40controller%5D=registration&amp;f3_phoenixdemotypo3org_typoscript_registration%5B%40package%5D=phoenixdemotypo3org#registration">
@@ -240,7 +239,7 @@ body.typo3-backend {
 	</fieldset>
 </form></div>
 
-<div class="typo3-text">
+<div class="t3-text">
 	<h1>Content</h1>
 	<div>The content for this site was created by importing the XML file found at <code>Resources/Private/Content/Content.xml</code>in the PhoenixDemoTypo3Org package.</div>
 </div>
@@ -253,7 +252,7 @@ body.typo3-backend {
 
 							<div id="secondayContent">
 								<div class="secondaryContentSection">
-									<div class="typo3-contentelement" about="/sites/phoenixdemotypo3org/homepage/secondary/latesttweets"><h2>Latest Tweets</h2>
+									<div class="t3-contentelement" about="/sites/phoenixdemotypo3org/homepage/secondary/latesttweets"><h2>Latest Tweets</h2>
 <!--<script src="http://widgets.twimg.com/j/2/widget.js"></script>
 <script>
 	if (typeof TWTR != 'undefined') {
@@ -306,7 +305,7 @@ body.typo3-backend {
 
 								<a href="http://www.typo3.org/">TYPO3 Phoenix</a> &middot;
 								<a href="http://flow3.typo3.org">Powered by FLOW3</a>
-								<img src="http://dev.typo3v5.local/_Resources/Static/Packages/PhoenixDemoTypo3Org/Images/FLOW3-Logo-11px.png" width="11" height="11" alt="FLOW3 Logo" />
+								<img src="website/Images/FLOW3-Logo-11px.png" width="11" height="11" alt="FLOW3 Logo" />
 							</p>
 						</div>
 					</div>
@@ -316,17 +315,15 @@ body.typo3-backend {
 	<!-- MODIFICATIONS FOR BACKEND START -->
 
 	<div id="t3-ui-top" class="aloha-block-do-not-deactivate">
-	<ul class="typo3-topbar">
-		<li class="typo3-active">Content</li>
+	<ul class="t3-topbar">
+		<li class="t3-active">Content</li>
 		<li>Management</li>
 	</ul>
-	<div class="typo3-clear"></div>
+	<div class="t3-clear"></div>
 </div>
 
-
-		  <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
-  <script src="js/libs/sproutcore-2.0.beta.1.js"></script>
-  <script src="js/app.js"></script>
-
+		<script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
+		<script src="js/libs/sproutcore-2.0.beta.1.js"></script>
+		<script src="js/app.js"></script>
 	</body>
 </html>
