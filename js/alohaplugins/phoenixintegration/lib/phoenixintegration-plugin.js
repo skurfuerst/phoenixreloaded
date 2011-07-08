@@ -6,7 +6,6 @@ function(Plugin) {
     return Plugin.create('phoenixintegration', {
     	dependencies: ['block'],
         init: function() {
-        	$('.typo3-contentelement').alohaBlock();
         	require(['block/blockmanager'], function(BlockManager) {
         		BlockManager.bind('block-selection-change', ContentModule._onBlockSelectionChange, ContentModule);
         	});

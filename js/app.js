@@ -10,7 +10,6 @@ ContentModule = SC.Application.create({
 			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.BlockSelectionController"}} {{content.id}} {{/collection}}!'),
 		});
 		breadcrumbMenuView.appendTo($('.typo3-breadcrumbmenu'));
-		//$('.typo3-breadcrumbmenu').append(breadcrumbMenuView.$());
 	},
 	_onBlockSelectionChange: function(selectedBlocks) {	ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
 	}

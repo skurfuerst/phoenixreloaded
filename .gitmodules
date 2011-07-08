@@ -1,0 +1,3 @@
+[submodule "js/libs/aloha"]
+	path = js/libs/aloha
+	url = git://github.com/alohaeditor/Aloha-Editor.git
