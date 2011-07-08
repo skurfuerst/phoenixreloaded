@@ -12,18 +12,25 @@ function(Plugin, block) {
 				BlockManager.registerBlockType('PluginBlock', block.PluginBlock);
         		BlockManager.bind('block-selection-change', ContentModule._onBlockSelectionChange, ContentModule);
 
-				Aloha.bind("aloha-editable-deactivated", function() {
-					PhoenixPlugin._onModification.apply(PhoenixPlugin, arguments);
+				Aloha.bind("aloha-editable-deactivated", function(event, data) {
+					var editable = data.editable;
+					if (!editable.isModified()) {
+						return;
+					}
+
+					ContentModule.ChangesController.addChange(editable);
 				});
-				Aloha.bind("aloha-smart-content-changed", function() {
-					PhoenixPlugin._onModification.apply(PhoenixPlugin, arguments);
+				Aloha.bind("aloha-smart-content-changed", function(event, data) {
+					var editable = data.editable;
+					if (!editable.isModified()) {
+						return;
+					}
+
+					ContentModule.ChangesController.addChange(editable);
 				});
         	});
         },
-		_onModification: function(event, editable) {
-			ContentModule.ChangesController.addChange(editable);
-		},
-        destroy: function() {
+		destroy: function() {
         }
     });
 	return PhoenixPlugin;
