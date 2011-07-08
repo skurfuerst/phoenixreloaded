@@ -38,7 +38,9 @@ var ContentModule = SC.Application.create({
 			right: [
 				ContentModule.Button.extend({
 					label: 'Revert',
-					disabledBinding: 'ContentModule.ChangesController.noChanges'
+					disabledBinding: 'ContentModule.ChangesController.noChanges',
+					target: 'ContentModule.ChangesController',
+					action: 'revert'
 				}),
 				ContentModule.MenuSeparator,
 				ContentModule.Button.extend({
@@ -175,7 +177,12 @@ ContentModule.ChangesController = SC.ArrayProxy.create({
 
 	noChanges: function() {
 		return this.get('length') == 0;
-	}.property('length')
+	}.property('length'),
+
+	revert: function() {
+		this.set('[]', []); // Reset all changes
+		window.location.reload();
+	}
 });
 
 ContentModule.PropertyPanelSection = SC.View.extend({
