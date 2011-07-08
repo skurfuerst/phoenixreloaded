@@ -8,7 +8,6 @@ var ContentModule = SC.Application.create({
 
 		$('body').addClass('t3-ui-controls-active'); // TODO: should be only set when header and property panel is visible
 
-
 		$('body').addClass('t3-backend');
 	},
 
@@ -198,13 +197,21 @@ Foo\
 ContentModule.BlockSelectionController = SC.Object.create({
 	blocks: [],
 
+	/**
+	 * Update the selection. If we have a block activated, we add the CSS class "t3-contentelement-selected to the body
+	 * so that we can modify the appearance of the block handles.
+	 */
 	updateSelection: function(blocks) {
 		if (this._updating) {
 			return;
 		}
 		this._updating = true;
-		if (blocks === undefined || blocks === null) {
+
+		if (blocks === undefined || blocks === null || blocks === [] || blocks.length == 0) {
 			blocks = [];
+			$('body').removeClass('t3-contentelement-selected');
+		} else {
+			$('body').addClass('t3-contentelement-selected');
 		}
 		if (blocks.length > 0 && typeof blocks[0].getSchema !== 'undefined') {
 			blocks = $.map(blocks, function(block) {
@@ -244,7 +251,7 @@ ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
 	 itemViewClass: SC.View.extend({
         templateName: function() {
 			  var content = this.get('content');
-			  console.log(content);
+			  //console.log(content);
 			  if (content.type === 'string') {
 				  return 'ContentModule.templatePropertyString';
 			  } else {
