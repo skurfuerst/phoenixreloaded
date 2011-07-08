@@ -25,12 +25,14 @@ ContentModule = SC.Application.create({
 				ContentModule.ToggleButton.extend({
 					target: 'ContentModule.PreviewController',
 					action: 'togglePreview',
-					label: 'Preview'
+					label: 'Preview',
+					icon: 'preview'
 				})
 			],
 			right: [
 				ContentModule.Button.extend({
-					label: 'Save'
+					label: 'Save',
+					disabledBinding: 'ContentModule.ChangesController.noChanges'
 				}),
 				ContentModule.Button.extend({
 					label: 'Revert'
@@ -67,9 +69,15 @@ ContentModule.Toolbar = SC.View.extend({
 ContentModule.Button = SC.Button.extend({
 	classNames: ['t3-button'],
 	attributeBindings: ['disabled'],
+	classNameBindings: ['iconClass'],
 	label: '',
 	disabled: false,
-	template: SC.Handlebars.compile('{{label}}')
+	icon: '',
+	template: SC.Handlebars.compile('{{label}}'),
+	iconClass: function() {
+		var icon = this.get('icon');
+		return icon !== '' ? 't3-icon-' + icon : '';
+	}.property('icon')
 });
 
 ContentModule.ToggleButton = ContentModule.Button.extend({
@@ -104,9 +112,21 @@ ContentModule.PreviewController = SC.Object.create({
 	previewMode: false,
 
 	togglePreview: function(pressed) {
-		console.log('Toogle preview', pressed);
-		this.set('previewMode', !this.get('previewMode'));
+		this.set('previewMode', pressed);
 	}
+});
+
+
+ContentModule.ChangesController = SC.ArrayProxy.create({
+	content: [],
+
+	addChange: function(change) {
+		this.pushObject(change);
+	},
+
+	noChanges: function() {
+		return this.get('length') == 0;
+	}.property('length')
 });
 
 ContentModule.PropertyPanelSection = SC.View.extend({
