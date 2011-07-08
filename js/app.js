@@ -59,10 +59,6 @@ var ContentModule = SC.Application.create({
 		var footer = ContentModule.Toolbar.create({
 			elementId: 't3-footer',
 			left: [
-				ContentModule.Button.extend({
-					label: 'Inspect'
-				}),
-				ContentModule.MenuSeparator,
 				breadcrumb
 			]
 		});
@@ -75,9 +71,9 @@ var ContentModule = SC.Application.create({
 });
 
 ContentModule.Breadcrumb = SC.View.extend({
-	tagName: 'ul',
+	tagName: 'div',
 	classNames: ['t3-breadcrumb', 'aloha-block-do-not-deactivate'],
-	template: SC.Handlebars.compile('<li class="t3-breadcrumb-page">{{view ContentModule.Breadcrumb.Page}}</li>{{#collection contentBinding="parentView.content" tagName="li"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
+	template: SC.Handlebars.compile('<div class="t3-breadcrumb-page">{{view ContentModule.Breadcrumb.Page}}</div>{{#collection contentBinding="parentView.content" tagName="ul"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
 });
 
 ContentModule.Breadcrumb.Item = SC.View.extend({
@@ -99,7 +95,7 @@ ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
 	href: '#',
 	// TODO Don't need to bind here actually
 	attributeBindings: ['href'],
-	template: SC.Handlebars.compile('Page'),
+	template: SC.Handlebars.compile('{{view ContentModule.Button label="Inspect"}} Page'),
 	click: function(event) {
 		ContentModule.BlockSelectionController.selectPage();
 		event.stopPropagation();
@@ -256,7 +252,6 @@ ContentModule.propertyTypeMap = {
 	'boolean': 'SC.Checkbox',
 	'string': 'SC.TextField'
 };
-
 
 SC.$(document).ready(function() {
 	ContentModule._bootstrap();
