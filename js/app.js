@@ -9,14 +9,14 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializePropertyPanel: function() {
-		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea" />')); // TODO: change prefix to "t3"; change style names to "Property Panel"
+		//$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>')); // TODO: change prefix to "t3"; change style names to "Property Panel"
 
-		var propertyPanelView = SC.View.create({
+		/*var propertyPanelView = SC.View.create({
 			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.CurrentlyActivatedBlockSchema"}}\
 {{view ContentModule.PropertyPanelSection}}\
  {{/collection}}!')
 		});
-		propertyPanelView.appendTo($('.t3-rightarea'));
+		propertyPanelView.appendTo($('.t3-rightarea'));*/
 	},
 
 	_initializeToolbar: function() {
