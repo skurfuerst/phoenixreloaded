@@ -9,14 +9,48 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializePropertyPanel: function() {
-		//$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>')); // TODO: change prefix to "t3"; change style names to "Property Panel"
+		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
+
+		var propertyPanelView = SC.View.create({ //
+			template: SC.Handlebars.compile('A{{#each schema}}\
+XX{{key}}{{label}} {{thestuff}}\
+x{{#each thestuff}} ASDF {{/each}}y\
+{{/each}}'),
+			schema: [
+				{
+					key: 'Plugin Settings',
+					label: 'huhu',
+					thestuff: [
+						{
+							key: 'package',
+							type: 'string',
+							label: 'Package'
+						}, {
+							key: 'controller',
+							type: 'string',
+							label: 'Controller'
+						}
+					]
+				},
+				{
+					key: 'Access',
+					thestuff: [
+						{
+							key: 'visibility',
+							type: 'boolean',
+							label: 'Visibility'
+						}
+					]
+				},
+			]
+		});
 
 		/*var propertyPanelView = SC.View.create({
 			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.CurrentlyActivatedBlockSchema"}}\
 {{view ContentModule.PropertyPanelSection}}\
  {{/collection}}!')
-		});
-		propertyPanelView.appendTo($('.t3-rightarea'));*/
+		});*/
+		propertyPanelView.appendTo($('.t3-rightarea'));
 	},
 
 	_initializeToolbar: function() {
