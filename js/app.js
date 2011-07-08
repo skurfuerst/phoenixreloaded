@@ -43,7 +43,8 @@ ContentModule = SC.Application.create({
 					disabledBinding: 'ContentModule.ChangesController.noChanges'
 				}),
 				ContentModule.Button.extend({
-					label: 'Revert'
+					label: 'Revert',
+					disabledBinding: 'ContentModule.ChangesController.noChanges'
 				})
 			]
 		});
