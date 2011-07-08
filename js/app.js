@@ -1,17 +1,18 @@
 var ContentModule;
 ContentModule = SC.Application.create({
 	_bootstrap: function() {
-		$('body').append($('<div class="typo3-rightarea" />'));
-		$('body').append($('<div class="typo3-actionmenu" />'));
-		$('body').append($('<div class="typo3-breadcrumbmenu" />'));
+		$('body').append($('<div class="typo3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea" />')); // TODO: change prefix to "t3"
+		$('body').append($('<div class="typo3-actionmenu aloha-block-do-not-deactivate" id="t3-ui-actionmenu" />'));
+		$('body').append($('<div class="typo3-breadcrumbmenu aloha-block-do-not-deactivate" id="t3-ui-breadcrumbmenu" />'));
 		$('body').addClass('typo3-backend');
 
 		var breadcrumbMenuView = SC.View.create({
-			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.BlockSelectionController"}} {{content.id}} {{/collection}}!'),
+			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.BlockSelectionController"}} {{content.title}} {{/collection}}!')
 		});
 		breadcrumbMenuView.appendTo($('.typo3-breadcrumbmenu'));
 	},
-	_onBlockSelectionChange: function(selectedBlocks) {	ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
+	_onBlockSelectionChange: function(selectedBlocks) {
+		ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
 	}
 });
 
