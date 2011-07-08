@@ -1,6 +1,8 @@
 var ContentModule;
 ContentModule = SC.Application.create({
 	_bootstrap: function() {
+		SC.TEMPLATES['ContentModule.templatePropertyString'] = SC.Handlebars.compile('<input type="text" />');
+		SC.TEMPLATES['ContentModule.templateTest'] = SC.Handlebars.compile('<input type="checkbox" />');
 		this._initializePropertyPanel();
 		this._initializeToolbar();
 		this._initializeFooter();
@@ -9,11 +11,13 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializePropertyPanel: function() {
-	return;
 		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
 		var propertyPanelView = SC.View.create({
-			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.CurrentlyActivatedBlockSchema.schema"}}<h2>{{content.key}}</h2> {{#each content.properties}}<div class="t3-propertypanel-field"> {{key}} </div>{{/each}} {{/collection}} </form>')
+			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.CurrentlyActivatedBlockSchema.schema"}}<h2>{{content.key}}</h2> {{collection ContentModule.ActivatedBlockSchemaProperties tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} {{/collection}} </form>'),
+			selectPropertyEditingWidget: function() {
+				return 'test';
+			}
 		});
 
 		/*var propertyPanelView = SC.View.create({
@@ -168,6 +172,35 @@ ContentModule.CurrentlyActivatedBlockSchema = SC.Object.create({
 	}
 });
 
+ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
+	 itemViewClass: SC.View.extend({
+        templateName: function() {
+			  var content = this.get('content');
+			  console.log(content);
+			  if (content.type === 'string') {
+				  return 'ContentModule.templatePropertyString';
+			  } else {
+				  return 'ContentModule.templateTest';
+			  }
+			  
+        }.property('type')
+    })
+
+});
+
+ContentModule.SchemaPropertiesView = SC.View.extend({
+
+	schemaTypeSelector: function() {
+		var content = this.get('content');
+		if (content.type === 'string') {
+			return SC.TextField.extend();
+		} else {
+			return '';
+		}
+
+
+	}.property('type')
+});
 
 ContentModule.BlockSelectionController = SC.ArrayProxy.create({
 	content: [],
