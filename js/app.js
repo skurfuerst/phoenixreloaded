@@ -1,5 +1,4 @@
-var ContentModule;
-ContentModule = SC.Application.create({
+var ContentModule = SC.Application.create({
 	_bootstrap: function() {
 		SC.TEMPLATES['ContentModule.templatePropertyString'] = SC.Handlebars.compile('<input type="text" />');
 		SC.TEMPLATES['ContentModule.templateTest'] = SC.Handlebars.compile('<input type="checkbox" />');
@@ -66,7 +65,7 @@ ContentModule = SC.Application.create({
 			elementId: 't3-footer',
 			left: [
 				ContentModule.Button.extend({
-					label: 'Nodes'
+					label: 'Inspect'
 				}),
 				ContentModule.MenuSeparator,
 				breadcrumb
@@ -78,13 +77,12 @@ ContentModule = SC.Application.create({
 	_onBlockSelectionChange: function(blocks) {
 		ContentModule.BlockSelectionController.updateSelection(blocks);
 	}
-
 });
 
 ContentModule.Breadcrumb = SC.View.extend({
 	tagName: 'ul',
 	classNames: ['t3-breadcrumb', 'aloha-block-do-not-deactivate'],
-	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.content" tagName="li"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
+	template: SC.Handlebars.compile('<li class="t3-breadcrumb-page">{{view ContentModule.Breadcrumb.Page}}</li>{{#collection contentBinding="parentView.content" tagName="li"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
 });
 
 ContentModule.Breadcrumb.Item = SC.View.extend({
@@ -92,7 +90,26 @@ ContentModule.Breadcrumb.Item = SC.View.extend({
 	href: '#',
 	// TODO Don't need to bind here actually
 	attributeBindings: ['href'],
-	template: SC.Handlebars.compile('{{item.title}}')
+	template: SC.Handlebars.compile('{{item.title}}'),
+	click: function(event) {
+		var item = this.get('item');
+		ContentModule.BlockSelectionController.selectItem(item);
+		event.stopPropagation();
+		return false;
+	}
+});
+
+ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
+	tagName: 'a',
+	href: '#',
+	// TODO Don't need to bind here actually
+	attributeBindings: ['href'],
+	template: SC.Handlebars.compile('Page'),
+	click: function(event) {
+		ContentModule.BlockSelectionController.selectPage();
+		event.stopPropagation();
+		return false;
+	}
 });
 
 ContentModule.MenuSeparator = SC.View.extend({
@@ -103,8 +120,6 @@ ContentModule.MenuSeparator = SC.View.extend({
 ContentModule.Toolbar = SC.View.extend({
 	tagName: 'div',
 	classNames: ['t3-toolbar', 'aloha-block-do-not-deactivate'],
-	left: [],
-	right: [],
 	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.left" tagName="ul" classNames="t3-toolbar-left"}}{{view content}}{{/collection}}{{#collection contentBinding="parentView.right" tagName="ul" classNames="t3-toolbar-right"}}{{view content}}{{/collection}}')
 });
 
@@ -187,21 +202,34 @@ ContentModule.BlockSelectionController = SC.Object.create({
 		if (blocks === undefined || blocks === null) {
 			blocks = [];
 		}
-
-		blocks = $.map(blocks, function(block) {
-			return {
-				id: block.id,
-				title: block.title,
-				schema: block.getSchema()
-			};
-		});
+		if (blocks.length > 0 && typeof blocks[0].getSchema !== 'undefined') {
+			blocks = $.map(blocks, function(block) {
+				return SC.Object.create({
+					id: block.id,
+					title: block.title,
+					schema: block.getSchema()
+				});
+			});
+		}
 		this.set('blocks', blocks);
 	},
 
 	selectedBlock: function() {
 		var blocks = this.get('blocks');
 		return blocks.length > 0 ? SC.Object.create(blocks[0]): null;
-	}.property('blocks')
+	}.property('blocks'),
+
+	selectPage: function() {
+		Aloha.Block.BlockManager._deactivateActiveBlocks();
+	},
+
+	selectItem: function(item) {
+		var block = Aloha.Block.BlockManager.getBlock(item.id);
+		if (block) {
+			console.log(block);
+			block.activate();
+		}
+	}
 });
 
 
@@ -226,16 +254,14 @@ SC.$(document).ready(function() {
 	ContentModule._bootstrap();
 });
 
-
-
 Handlebars.registerHelper("debug", function(optionalValue) {
   console.log("Current Context");
   console.log("====================");
   console.log(this);
 
   if (optionalValue) {
-    console.log("Value");
-    console.log("====================");
-    console.log(optionalValue);
+	console.log("Value");
+	console.log("====================");
+	console.log(optionalValue);
   }
 });

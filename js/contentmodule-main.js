@@ -1,7 +1,4 @@
-define(
-	'contentmodule-main',
-	function() {
-		require({baseUrl: 'js/libs/aloha/src'}, ['aloha'], function() {
-		});
-	}
-);
+define(function() {
+	require({baseUrl: 'js/libs/aloha/src'}, ['aloha'], function() {
+	});
+});
