@@ -131,11 +131,13 @@ body {
 .t3-toolbar-left li,
 .t3-toolbar-right li {
   float: left;
-  margin-left: 10px; }
+  padding-left: 10px; }
   .t3-toolbar-left li:first-child,
   .t3-toolbar-right li:first-child {
-    margin-left: 12px; }
+    padding-left: 12px; }
 
+#t3-footer .t3-toolbar-left > li:first-child {
+  background: url(../images/breadcrumb-arrow-grey.png) left 50% no-repeat; }
 #t3-footer .t3-toolbar-left ul li {
   padding: 0 10px;
   color: #000000;
