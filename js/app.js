@@ -20,21 +20,27 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializeToolbar: function() {
-		var button = SC.Button.extend({
-			target: 'ContentModule.PreviewController',
-			action: 'togglePreview',
-			content: 'Foo',
-			classNames: 't3-button',
-			template: SC.Handlebars.compile('Preview')
-		});
 		var toolbar = ContentModule.Toolbar.create({
 			left: [
-				button
+				ContentModule.ToggleButton.extend({
+					target: 'ContentModule.PreviewController',
+					action: 'togglePreview',
+					label: 'Preview'
+				})
+			],
+			right: [
+				ContentModule.Button.extend({
+					label: 'Save'
+				}),
+				ContentModule.Button.extend({
+					label: 'Revert'
+				})
 			]
 		});
 		toolbar.appendTo($('body'));
 
 	},
+
 	_initializeFooter: function() {
 		$('body').append($('<div class="t3-breadcrumbmenu aloha-block-do-not-deactivate" id="t3-ui-breadcrumbmenu" />')); // TODO: rename CSS
 
@@ -52,15 +58,53 @@ ContentModule = SC.Application.create({
 
 ContentModule.Toolbar = SC.View.extend({
 	tagName: 'div',
-	classNames: ['t3-toolbar aloha-block-do-not-deactivate'],
+	classNames: ['t3-toolbar', 'aloha-block-do-not-deactivate'],
+	left: [],
+	right: [],
 	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.left" tagName="ul" classNames="t3-toolbar-left"}}{{view content}}{{/collection}}{{#collection contentBinding="parentView.right" tagName="ul" classNames="t3-toolbar-right"}}{{view content}}{{/collection}}')
+});
+
+ContentModule.Button = SC.Button.extend({
+	classNames: ['t3-button'],
+	attributeBindings: ['disabled'],
+	label: '',
+	disabled: false,
+	template: SC.Handlebars.compile('{{label}}')
+});
+
+ContentModule.ToggleButton = ContentModule.Button.extend({
+	classNames: ['t3-button'],
+	classNameBindings: ['pressed'],
+	pressed: false,
+	toggle: function() {
+		this.set('pressed', !this.get('pressed'));
+	},
+	mouseUp: function(event) {
+		if (this.get('isActive')) {
+			var action = this.get('action'),
+			target = this.get('targetObject');
+
+			this.toggle();
+			if (target && action) {
+				if (typeof action === 'string') {
+					action = target[action];
+				}
+				action.call(target, this.get('pressed'), this);
+			}
+
+			this.set('isActive', false);
+		}
+
+		this._mouseDown = false;
+		this._mouseEntered = false;
+	}
 });
 
 ContentModule.PreviewController = SC.Object.create({
 	previewMode: false,
 
-	togglePreview: function() {
-		console.log('Toogle preview');
+	togglePreview: function(pressed) {
+		console.log('Toogle preview', pressed);
 		this.set('previewMode', !this.get('previewMode'));
 	}
 });
