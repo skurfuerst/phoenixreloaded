@@ -9,6 +9,7 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializePropertyPanel: function() {
+	return;
 		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
 		var propertyPanelView = SC.View.create({
@@ -25,7 +26,11 @@ ContentModule = SC.Application.create({
 
 	_initializeToolbar: function() {
 		var toolbar = ContentModule.Toolbar.create({
+			elementId: 't3-toolbar',
 			left: [
+				ContentModule.ToggleButton.extend({
+					label: 'Pages'
+				}),
 				ContentModule.ToggleButton.extend({
 					target: 'ContentModule.PreviewController',
 					action: 'togglePreview',
@@ -48,18 +53,28 @@ ContentModule = SC.Application.create({
 	},
 
 	_initializeFooter: function() {
-		$('body').append($('<div class="t3-breadcrumbmenu aloha-block-do-not-deactivate" id="t3-ui-breadcrumbmenu" />')); // TODO: rename CSS
-
-		var breadcrumbMenuView = SC.View.create({
-			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.BlockSelectionController"}} {{content.title}} {{/collection}}!')
+		var breadcrumb = ContentModule.Breadcrumb.extend({
+			contentBinding: 'ContentModule.BlockSelectionController'
 		});
-		breadcrumbMenuView.appendTo($('.t3-breadcrumbmenu'));
+		var footer = ContentModule.Toolbar.create({
+			elementId: 't3-footer',
+			left: [
+				breadcrumb
+			]
+		});
+		footer.appendTo($('body'));
 	},
 
 	_onBlockSelectionChange: function(selectedBlocks) {
 		ContentModule.BlockSelectionController.updateSelectedBlocks(selectedBlocks);
 	}
 
+});
+
+ContentModule.Breadcrumb = SC.View.extend({
+	tagName: 'ul',
+	classNames: ['t3-breadcrumb', 'aloha-block-do-not-deactivate'],
+	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.content" tagName="li"}}{{content.title}}{{/collection}}')
 });
 
 ContentModule.Toolbar = SC.View.extend({
@@ -120,7 +135,6 @@ ContentModule.PreviewController = SC.Object.create({
 	}
 });
 
-
 ContentModule.ChangesController = SC.ArrayProxy.create({
 	content: [],
 
@@ -169,8 +183,6 @@ ContentModule.BlockSelectionController = SC.ArrayProxy.create({
 });
 
 SC.$(document).ready(function() {
-
-
 	ContentModule._bootstrap();
 });
 

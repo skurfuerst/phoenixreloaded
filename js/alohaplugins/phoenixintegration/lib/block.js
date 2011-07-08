@@ -26,6 +26,14 @@ function(block) {
 	// TODO: should be generic lateron.
 	exports.TextBlock = exports.AbstractBlock.extend({
 		title: 'Text',
+
+		init: function() {
+			this.attr('title', this.element.find('h1').html(), true);
+			this.attr('content', this.element.find('.t3-content').html(), true);
+		},
+		render: function(element) {
+			return '<h1 class="aloha-editable">' + this.attr('title') + '</h1><div class="t3-content aloha-editable">' + this.attr('content') + '</div>'; // TODO: use templateable block here
+		},
 		getSchema: function() {
 			return null;
 		}
