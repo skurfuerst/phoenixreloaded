@@ -9,17 +9,17 @@ function(block) {
 			var that = this;
 			var addAboveHandle = $('<span class="t3-add-above-handle">Add above</span>');
 			this.element.prepend(addAboveHandle);
-			addAboveHandle.click(function() {
+			/*addAboveHandle.click(function() {
 				// TODO implement
 				return false;
-			});
+			});*/
 
 			var addBelowHandle = $('<span class="t3-add-below-handle">Add below</span>');
 			this.element.prepend(addBelowHandle);
-			addBelowHandle.click(function() {
+			/*addBelowHandle.click(function() {
 				// TODO implement
 				return false;
-			});
+			});*/
 		}
 	});
 
