@@ -2,7 +2,7 @@
 $menu-height: 25px;
 $toolbar-height: 30px;
 $property-panel-width: 200px;
-$footer-height: 25px;
+$footer-height: 30px;
 
 //Mixins //
 @mixin box-sizing {
@@ -24,6 +24,8 @@ $footer-height: 25px;
 /** CSS start **/
 body {
 	margin-right: $property-panel-width;
+	margin-bottom: $footer-height;
+	margin-top: $menu-height + $toolbar-height;
 }
 #t3-footer,
 #t3-toolbar,
@@ -33,7 +35,7 @@ body {
 .t3-clear {
 	clear:both;
 }
-.t3-topbar {
+#t3-ui-top {
 	@include box-shadow(0px, 1px, 3px, #000000);
     background: -moz-linear-gradient(center top , #444444, #2D2D2D) repeat scroll 0 0 transparent;
     left: 0;
@@ -42,7 +44,28 @@ body {
     width: 100%;
     height: $menu-height;
     line-height: $menu-height;
-    z-index: 10010;
+    z-index: 10015;
+    img.t3-logo {
+    	position: absolute;
+    	right: 5px;
+    	top: 1px;
+    }
+    .t3-button-logout {
+    	position: absolute;
+    	right: 35px;
+    	top: -2px;
+    	color: #cccccc;
+    	text-decoration: underline;
+   		font-size: 10px;
+    	&:hover,
+    	&:active,
+    	&:focus {
+    		text-decoration: none;
+    	}
+    }
+}
+.t3-ui-controls-active #t3-ui-top {
+	@include box-shadow(0px, 0px, 0px, transparent);
 }
 
 .t3-topbar li {
@@ -71,7 +94,7 @@ body {
     right: 0;
     top: 0;
     width: $property-panel-width;
-    z-index: 10011;
+    z-index: 10014;
 }
 .t3-propertypanel-form {
 	fieldset {
@@ -123,7 +146,6 @@ body {
 	float: left;
 	height: 100%;
 	line-height: $toolbar-height;
-	margin-left: 12px;
 }
 .t3-toolbar-right {
 	float: right;
@@ -139,12 +161,16 @@ body {
 		margin-left: 0;
 	}
 }
+#t3-footer .t3-toolbar-left > li {
+	&:first-child {
+		background: url(../images/breadcrumb-arrow-grey.png) right 50% no-repeat;
+	}
+}
 button.t3-button {
     background: -moz-linear-gradient(center top , #999999, #555555) repeat scroll 0 0 transparent;
     border: 1px solid #272727;
     @include rounded-corner(4px);
     color: #e4e4e4;
-    -moz-box-shadow: -1px 0 0 rgba(66, 66, 66, 0.8), 1px 0 0 rgba(73, 73, 73, 0.8);
     padding: 1px 4px;
     text-shadow: 0 -1px 0 #444444;
     transition-property: background;
@@ -162,10 +188,9 @@ button.t3-button {
 		    background: -moz-linear-gradient(center top , #999999, #555555) repeat scroll 0 0 transparent;
 		}
 	}
-
-}
-button.t3-button:hover {
-    background: -moz-linear-gradient(center top , #aaaaaa, #666666) repeat scroll 0 0 transparent;
+	&:hover {
+		background: -moz-linear-gradient(center top , #aaaaaa, #666666) repeat scroll 0 0 transparent;
+	}
 }
 #t3-footer {
 	background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
@@ -178,43 +203,59 @@ button.t3-button:hover {
     @include box-shadow(-1px, -2px, 3px, rgba(0, 0, 0, 0.5))
 }
 
-.aloha-block:hover > .t3-add-below-handle,
-.aloha-block-active > .t3-add-below-handle {
-	display:block;
+.t3-add-below-handle,
+.t3-add-above-handle {
+	position: absolute;
+	right: -1px;
+	top: -17px;
+	width: 20px;
+	height: 16px;
+	overflow: hidden;
+	font-size: 9px;
+	display: none;
+	background-image: url(../images/plus.png), -moz-linear-gradient(center top , #eeeeee, #bbbbbb);
+	background-position: 50% 50%, 50% 50%;
+	background-repeat: no-repeat, repeat;
+	background-color: transparent;
+	border-width: 1px 1px 0 1px;
+	border-style: solid solid none solid;
+	border-color: #909090;
+	border-radius: 5px 5px 0 0;
+	text-indent: -9999px;
+	@include box-shadow(0px, -1px, 4px, #909090);
+	cursor: pointer;
+	&:hover {
+		@include box-shadow(0px, -1px, 4px, #aaaaaa);
+	}
 }
 .t3-add-below-handle {
-	position:absolute;
-	right:-1px;
-	bottom:-13px;
-	width:44px;
-	height:12px;
-	overflow:hidden;
-	font-size:9px;
-	display:none;
-	background:url(../img/toolbar-draghandle.gif);
-	border-bottom:1px solid #CCC;
-	border-left:1px solid #CCC;
-	border-right:1px solid #CCC;
-	border-bottom-left-radius:5px;
-	border-bottom-right-radius:5px;
+	top: auto;
+	bottom: -17px;
+	border-width: 0 1px 1px 1px;
+	border-style: none solid solid solid;
+	border-radius: 0 0 5px 5px;
+	@include box-shadow(0px, 1px, 3px, #909090);
 }
 
 .aloha-block:hover > .t3-add-above-handle,
-.aloha-block-active > .t3-add-above-handle {
+.aloha-block-active > .t3-add-above-handle,
+.aloha-block:hover > .t3-add-below-handle,
+.aloha-block-active > .t3-add-below-handle {
 	display:block;
+	z-index: 10000;
 }
-.t3-add-above-handle {
-	position:absolute;
-	right:-1px;
-	top:-13px;
-	width:44px;
-	height:12px;
-	overflow:hidden;
-	font-size:9px;
-	display:none;
-	border-top:1px solid #CCC;
-	border-left:1px solid #CCC;
-	border-right:1px solid #CCC;
-	border-top-left-radius:5px;
-	border-top-right-radius:5px;
+.t3-contentelement-selected {
+	.aloha-block:hover > .t3-add-above-handle,
+	.aloha-block:hover > .t3-add-below-handle {
+		display: none;
+	}
+	.aloha-block-active > .t3-add-above-handle,
+	.aloha-block-active > .t3-add-below-handle,
+	.aloha-block-active:hover > .t3-add-above-handle,
+	.aloha-block-active:hover > .t3-add-below-handle {
+		display: block;
+	}
+}
+div.aloha-block:hover > div.aloha-block-inner {
+	outline: 1px solid #909090;
 }

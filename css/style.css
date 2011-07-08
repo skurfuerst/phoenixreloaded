@@ -1,6 +1,8 @@
 /** CSS start **/
 body {
-  margin-right: 200px; }
+  margin-right: 200px;
+  margin-bottom: 30px;
+  margin-top: 55px; }
 
 #t3-footer,
 #t3-toolbar,
@@ -10,7 +12,7 @@ body {
 .t3-clear {
   clear: both; }
 
-.t3-topbar {
+#t3-ui-top {
   box-shadow: 0px 1px 3px black;
   -moz-box-shadow: 0px 1px 3px black;
   -webkit-box-shadow: 0px 1px 3px black;
@@ -21,7 +23,25 @@ body {
   width: 100%;
   height: 25px;
   line-height: 25px;
-  z-index: 10010; }
+  z-index: 10015; }
+  #t3-ui-top img.t3-logo {
+    position: absolute;
+    right: 5px;
+    top: 1px; }
+  #t3-ui-top .t3-button-logout {
+    position: absolute;
+    right: 35px;
+    top: -2px;
+    color: #cccccc;
+    text-decoration: underline;
+    font-size: 10px; }
+    #t3-ui-top .t3-button-logout:hover, #t3-ui-top .t3-button-logout:active, #t3-ui-top .t3-button-logout:focus {
+      text-decoration: none; }
+
+.t3-ui-controls-active #t3-ui-top {
+  box-shadow: 0px 0px 0px transparent;
+  -moz-box-shadow: 0px 0px 0px transparent;
+  -webkit-box-shadow: 0px 0px 0px transparent; }
 
 .t3-topbar li {
   float: left;
@@ -51,7 +71,7 @@ body {
   right: 0;
   top: 0;
   width: 200px;
-  z-index: 10011; }
+  z-index: 10014; }
 
 .t3-propertypanel-form fieldset {
   border: 0;
@@ -100,8 +120,7 @@ body {
 .t3-toolbar-left {
   float: left;
   height: 100%;
-  line-height: 30px;
-  margin-left: 12px; }
+  line-height: 30px; }
 
 .t3-toolbar-right {
   float: right;
@@ -117,6 +136,9 @@ body {
   .t3-toolbar-right li:first-child {
     margin-left: 0; }
 
+#t3-footer .t3-toolbar-left > li:first-child {
+  background: url(../images/breadcrumb-arrow-grey.png) right 50% no-repeat; }
+
 button.t3-button {
   background: -moz-linear-gradient(center top, #999999, #555555) repeat scroll 0 0 transparent;
   border: 1px solid #272727;
@@ -124,7 +146,6 @@ button.t3-button {
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   color: #e4e4e4;
-  -moz-box-shadow: -1px 0 0 rgba(66, 66, 66, 0.8), 1px 0 0 rgba(73, 73, 73, 0.8);
   padding: 1px 4px;
   text-shadow: 0 -1px 0 #444444;
   transition-property: background;
@@ -140,57 +161,75 @@ button.t3-button {
     color: #bbbbbb; }
     button.t3-button[disabled]:hover {
       background: -moz-linear-gradient(center top, #999999, #555555) repeat scroll 0 0 transparent; }
-
-button.t3-button:hover {
-  background: -moz-linear-gradient(center top, #aaaaaa, #666666) repeat scroll 0 0 transparent; }
+  button.t3-button:hover {
+    background: -moz-linear-gradient(center top, #aaaaaa, #666666) repeat scroll 0 0 transparent; }
 
 #t3-footer {
   background: -moz-linear-gradient(center top, #2d2d2d, #111111) repeat scroll 0 0 transparent;
   bottom: 0;
   left: 0;
   position: fixed;
-  height: 25px;
+  height: 30px;
   right: 200px;
   z-index: 10012;
   box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5); }
 
-.aloha-block:hover > .t3-add-below-handle,
-.aloha-block-active > .t3-add-below-handle {
-  display: block; }
-
-.t3-add-below-handle {
-  position: absolute;
-  right: -1px;
-  bottom: -13px;
-  width: 44px;
-  height: 12px;
-  overflow: hidden;
-  font-size: 9px;
-  display: none;
-  background: url(../img/toolbar-draghandle.gif);
-  border-bottom: 1px solid #CCC;
-  border-left: 1px solid #CCC;
-  border-right: 1px solid #CCC;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px; }
-
-.aloha-block:hover > .t3-add-above-handle,
-.aloha-block-active > .t3-add-above-handle {
-  display: block; }
-
+.t3-add-below-handle,
 .t3-add-above-handle {
   position: absolute;
   right: -1px;
-  top: -13px;
-  width: 44px;
-  height: 12px;
+  top: -17px;
+  width: 20px;
+  height: 16px;
   overflow: hidden;
   font-size: 9px;
   display: none;
-  border-top: 1px solid #CCC;
-  border-left: 1px solid #CCC;
-  border-right: 1px solid #CCC;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px; }
+  background-image: url(../images/plus.png), -moz-linear-gradient(center top, #eeeeee, #bbbbbb);
+  background-position: 50% 50%, 50% 50%;
+  background-repeat: no-repeat, repeat;
+  background-color: transparent;
+  border-width: 1px 1px 0 1px;
+  border-style: solid solid none solid;
+  border-color: #909090;
+  border-radius: 5px 5px 0 0;
+  text-indent: -9999px;
+  box-shadow: 0px -1px 4px #909090;
+  -moz-box-shadow: 0px -1px 4px #909090;
+  -webkit-box-shadow: 0px -1px 4px #909090;
+  cursor: pointer; }
+  .t3-add-below-handle:hover,
+  .t3-add-above-handle:hover {
+    box-shadow: 0px -1px 4px #aaaaaa;
+    -moz-box-shadow: 0px -1px 4px #aaaaaa;
+    -webkit-box-shadow: 0px -1px 4px #aaaaaa; }
+
+.t3-add-below-handle {
+  top: auto;
+  bottom: -17px;
+  border-width: 0 1px 1px 1px;
+  border-style: none solid solid solid;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0px 1px 3px #909090;
+  -moz-box-shadow: 0px 1px 3px #909090;
+  -webkit-box-shadow: 0px 1px 3px #909090; }
+
+.aloha-block:hover > .t3-add-above-handle,
+.aloha-block-active > .t3-add-above-handle,
+.aloha-block:hover > .t3-add-below-handle,
+.aloha-block-active > .t3-add-below-handle {
+  display: block;
+  z-index: 10000; }
+
+.t3-contentelement-selected .aloha-block:hover > .t3-add-above-handle,
+.t3-contentelement-selected .aloha-block:hover > .t3-add-below-handle {
+  display: none; }
+.t3-contentelement-selected .aloha-block-active > .t3-add-above-handle,
+.t3-contentelement-selected .aloha-block-active > .t3-add-below-handle,
+.t3-contentelement-selected .aloha-block-active:hover > .t3-add-above-handle,
+.t3-contentelement-selected .aloha-block-active:hover > .t3-add-below-handle {
+  display: block; }
+
+div.aloha-block:hover > div.aloha-block-inner {
+  outline: 1px solid #909090; }

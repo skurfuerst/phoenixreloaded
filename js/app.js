@@ -1,5 +1,4 @@
-var ContentModule;
-ContentModule = SC.Application.create({
+var ContentModule = SC.Application.create({
 	_bootstrap: function() {
 		SC.TEMPLATES['ContentModule.templateProperty_string'] = SC.Handlebars.compile('<input type="text" value="{{currentData}}" />');
 		SC.TEMPLATES['ContentModule.templateProperty_boolean'] = SC.Handlebars.compile('<input type="checkbox" />');
@@ -8,7 +7,6 @@ ContentModule = SC.Application.create({
 		this._initializeFooter();
 
 		$('body').addClass('t3-ui-controls-active'); // TODO: should be only set when header and property panel is visible
-
 
 		$('body').addClass('t3-backend');
 	},
@@ -20,12 +18,6 @@ ContentModule = SC.Application.create({
 			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlock.schema"}}<h2>{{content.key}}</h2> {{#collection tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} <label for="">{{content.label}}</label> {{propertyEditWidget content}} {{/collection}} {{/collection}} {{#view SC.Button}}Save{{/view}} {{#view SC.Button}}Reset{{/view}}</form>')
 
 		});
-
-		/*var propertyPanelView = SC.View.create({
-			template: SC.Handlebars.compile('{{#collection contentBinding="ContentModule.CurrentlyActivatedBlockSchema"}}\
-{{view ContentModule.PropertyPanelSection}}\
- {{/collection}}!')
-		});*/
 		propertyPanelView.appendTo($('.t3-rightarea'));
 	},
 
@@ -66,7 +58,7 @@ ContentModule = SC.Application.create({
 			elementId: 't3-footer',
 			left: [
 				ContentModule.Button.extend({
-					label: 'Nodes'
+					label: 'Inspect'
 				}),
 				ContentModule.MenuSeparator,
 				breadcrumb
@@ -78,13 +70,12 @@ ContentModule = SC.Application.create({
 	_onBlockSelectionChange: function(blocks) {
 		ContentModule.BlockSelectionController.updateSelection(blocks);
 	}
-
 });
 
 ContentModule.Breadcrumb = SC.View.extend({
 	tagName: 'ul',
 	classNames: ['t3-breadcrumb', 'aloha-block-do-not-deactivate'],
-	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.content" tagName="li"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
+	template: SC.Handlebars.compile('<li class="t3-breadcrumb-page">{{view ContentModule.Breadcrumb.Page}}</li>{{#collection contentBinding="parentView.content" tagName="li"}}{{view ContentModule.Breadcrumb.Item itemBinding="parentView.content"}}{{/collection}}')
 });
 
 ContentModule.Breadcrumb.Item = SC.View.extend({
@@ -92,7 +83,26 @@ ContentModule.Breadcrumb.Item = SC.View.extend({
 	href: '#',
 	// TODO Don't need to bind here actually
 	attributeBindings: ['href'],
-	template: SC.Handlebars.compile('{{item.title}}')
+	template: SC.Handlebars.compile('{{item.title}}'),
+	click: function(event) {
+		var item = this.get('item');
+		ContentModule.BlockSelectionController.selectItem(item);
+		event.stopPropagation();
+		return false;
+	}
+});
+
+ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
+	tagName: 'a',
+	href: '#',
+	// TODO Don't need to bind here actually
+	attributeBindings: ['href'],
+	template: SC.Handlebars.compile('Page'),
+	click: function(event) {
+		ContentModule.BlockSelectionController.selectPage();
+		event.stopPropagation();
+		return false;
+	}
 });
 
 ContentModule.MenuSeparator = SC.View.extend({
@@ -103,8 +113,6 @@ ContentModule.MenuSeparator = SC.View.extend({
 ContentModule.Toolbar = SC.View.extend({
 	tagName: 'div',
 	classNames: ['t3-toolbar', 'aloha-block-do-not-deactivate'],
-	left: [],
-	right: [],
 	template: SC.Handlebars.compile('{{#collection contentBinding="parentView.left" tagName="ul" classNames="t3-toolbar-left"}}{{view content}}{{/collection}}{{#collection contentBinding="parentView.right" tagName="ul" classNames="t3-toolbar-right"}}{{view content}}{{/collection}}')
 });
 
@@ -183,19 +191,33 @@ Foo\
 ContentModule.BlockSelectionController = SC.Object.create({
 	blocks: [],
 
+	/**
+	 * Update the selection. If we have a block activated, we add the CSS class "t3-contentelement-selected to the body
+	 * so that we can modify the appearance of the block handles.
+	 */
 	updateSelection: function(blocks) {
-		if (blocks === undefined || blocks === null) {
-			blocks = [];
+		if (this._updating) {
+			return;
 		}
+		this._updating = true;
 
-		blocks = $.map(blocks, function(block) {
-			return {
-				id: block.id,
-				title: block.title,
-				schema: block.getSchema()
-			};
-		});
+		if (blocks === undefined || blocks === null || blocks === [] || blocks.length == 0) {
+			blocks = [];
+			$('body').removeClass('t3-contentelement-selected');
+		} else {
+			$('body').addClass('t3-contentelement-selected');
+		}
+		if (blocks.length > 0 && typeof blocks[0].getSchema !== 'undefined') {
+			blocks = $.map(blocks, function(block) {
+				return SC.Object.create({
+					id: block.id,
+					title: block.title,
+					schema: block.getSchema()
+				});
+			});
+		}
 		this.set('blocks', blocks);
+		this._updating = false;
 	},
 
 	getSelectedBlock: function() {
@@ -206,34 +228,21 @@ ContentModule.BlockSelectionController = SC.Object.create({
 	selectedBlock: function() {
 		var blocks = this.get('blocks');
 		return blocks.length > 0 ? SC.Object.create(blocks[0]): null;
-	}.property('blocks')
-});
+	}.property('blocks'),
 
+	selectPage: function() {
+		Aloha.Block.BlockManager._deactivateActiveBlocks();
+	},
 
-ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
-
-	
-
-	/*
-	itemViewClassBinding: function() {
-		return SC.View;
+	selectItem: function(item) {
+		var block = Aloha.Block.BlockManager.getBlock(item.id);
+		if (block) {
+			// FIXME !!! This is to prevent the event triggering a refresh of the blocks which trigger an event and kill the selection
+			this._updating = true;
+			block.activate();
+			this._updating = false;
+		}
 	}
-
-				SC.View.extend({
-        templateName: function() {
-			  var content = this.get('content');
-			  // @todo: cleanup
-			  var block = Aloha.Block.BlockManager.getBlock(ContentModule.BlockSelectionController.getSelectedBlock().id);
-			  console.log(block);
-			  content.currentData = 'test';
-				//		 block.attr(content.key);
-				this.set('content', content);
-			  return 'ContentModule.templateProperty_'+ content.type;
-
-
-        }.property('type')
-    })
-*/
 });
 
 ContentModule.propertyTypeMap = {
@@ -266,15 +275,14 @@ Handlebars.registerHelper('propertyEditWidget', function(propertySchema) {
 	return SC.Handlebars.ViewHelper.helper(this, path, options);
 });
 
-
 Handlebars.registerHelper("debug", function(optionalValue) {
   console.log("Current Context");
   console.log("====================");
   console.log(this);
 
   if (optionalValue) {
-    console.log("Value");
-    console.log("====================");
-    console.log(optionalValue);
+	console.log("Value");
+	console.log("====================");
+	console.log(optionalValue);
   }
 });
