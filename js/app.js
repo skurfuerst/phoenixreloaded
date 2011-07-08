@@ -1,7 +1,7 @@
 var ContentModule;
 ContentModule = SC.Application.create({
 	_bootstrap: function() {
-		SC.TEMPLATES['ContentModule.templateProperty_string'] = SC.Handlebars.compile('<input type="text" value="{{data}}" />');
+		SC.TEMPLATES['ContentModule.templateProperty_string'] = SC.Handlebars.compile('<input type="text" value="{{currentData}}" />');
 		SC.TEMPLATES['ContentModule.templateProperty_boolean'] = SC.Handlebars.compile('<input type="checkbox" />');
 		this._initializePropertyPanel();
 		this._initializeToolbar();
@@ -17,7 +17,7 @@ ContentModule = SC.Application.create({
 		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
 		var propertyPanelView = SC.View.create({
-			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlock.schema"}}<h2>{{content.key}}</h2> {{collection ContentModule.ActivatedBlockSchemaProperties tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} {{/collection}} </form>')
+			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlock.schema"}}<h2>{{content.key}}</h2> {{#collection tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} <label for="">{{content.label}}</label> {{propertyEditWidget content}} {{/collection}} {{/collection}} {{#view SC.Button}}Save{{/view}} {{#view SC.Button}}Reset{{/view}}</form>')
 
 		});
 
@@ -204,31 +204,67 @@ ContentModule.BlockSelectionController = SC.Object.create({
 	},
 
 	selectedBlock: function() {
-		this.getSelectedBlock();
+		var blocks = this.get('blocks');
+		return blocks.length > 0 ? SC.Object.create(blocks[0]): null;
 	}.property('blocks')
 });
 
 
 ContentModule.ActivatedBlockSchemaProperties = SC.CollectionView.extend({
-	 itemViewClass: SC.View.extend({
+
+	
+
+	/*
+	itemViewClassBinding: function() {
+		return SC.View;
+	}
+
+				SC.View.extend({
         templateName: function() {
 			  var content = this.get('content');
-
-			  Aloha.Block.BlockManager.getBlock(ContentModule.BlockSelectionController.getSelectedBlock());
-			  
+			  // @todo: cleanup
+			  var block = Aloha.Block.BlockManager.getBlock(ContentModule.BlockSelectionController.getSelectedBlock().id);
+			  console.log(block);
+			  content.currentData = 'test';
+				//		 block.attr(content.key);
+				this.set('content', content);
 			  return 'ContentModule.templateProperty_'+ content.type;
 
 
         }.property('type')
     })
-
+*/
 });
+
+ContentModule.propertyTypeMap = {
+	'boolean': 'SC.Checkbox',
+	'string': 'SC.TextField'
+};
 
 
 SC.$(document).ready(function() {
 	ContentModule._bootstrap();
 });
 
+Handlebars.registerHelper('propertyEditWidget', function(propertySchema) {
+	var contextData = this.get('content');
+	var block = Aloha.Block.BlockManager.getBlock(ContentModule.BlockSelectionController.getSelectedBlock().id);
+
+	var path = ContentModule.propertyTypeMap[contextData.type];
+	// todo: understand all options and clean
+	options = {};
+	options.data = {};
+	options.data.view = this;
+	options.hash = {};
+	options.hash.class = contextData.key;
+	// todo: set block attributes into SC object to bind value here
+	options.hash.value = block.attr(contextData.key);
+	
+
+	console.log(options.value);
+
+	return SC.Handlebars.ViewHelper.helper(this, path, options);
+});
 
 
 Handlebars.registerHelper("debug", function(optionalValue) {
