@@ -1,67 +1,72 @@
+/** CSS start **/
 .typo3-clear {
-	clear:both;
-}
+  clear: both; }
+
 .typo3-topbar {
-	box-shadow: 0 1px 3px #000000;
-	-moz-box-shadow: 0 1px 3px #000000;
-	-webkit-box-shadow: 0 1px 3px #000000;
-    background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
-    height: 25px;
-    left: 0;
-    line-height: 25px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10010;
-}
+  box-shadow: 0px 1px 3px black;
+  -moz-box-shadow: 0px 1px 3px black;
+  -webkit-box-shadow: 0px 1px 3px black;
+  background: -moz-linear-gradient(center top, #2d2d2d, #111111) repeat scroll 0 0 transparent;
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 25px;
+  line-height: 25px;
+  z-index: 10010; }
 
 .typo3-topbar li {
-	float:left;
-	list-style-type:none;
-	height:100%;
-	padding-left:20px;
-	padding-right:20px;
-	color: #ffffff;
-}
+  float: left;
+  list-style-type: none;
+  height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #ffffff; }
 
 .typo3-topbar li.typo3-active {
-	background: -moz-linear-gradient(center top , #373737, #555555) repeat scroll 0 0 transparent;
-	background: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#373737), to(#555555));
-	text-shadow: 1px 0 6px #FF8700, -1px -1px 0 #000000;
-}
+  background: -moz-linear-gradient(center top, #373737, #555555) repeat scroll 0 0 transparent;
+  background: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#373737), to(#555555));
+  text-shadow: 1px 0 6px #ff8700, -1px -1px 0 black; }
 
 .typo3-rightarea {
-	-moz-box-shadow: -2px 0 3px rgba(0, 0, 0, 0.5);
-    -moz-box-sizing: border-box;
-    background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
-    height: 100%;
-    margin-top: 25px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 200px;
-    z-index: 10011;
-}
+  box-shadow: -2px 0px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: -2px 0px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: -2px 0px 3px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background: -moz-linear-gradient(center top, #2d2d2d, #111111) repeat scroll 0 0 transparent;
+  height: 100%;
+  margin-top: 25px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 200px;
+  z-index: 10011; }
+
 body {
-	margin-right:200px;
-}
+  margin-right: 200px; }
 
 .typo3-actionmenu {
-	 -moz-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
-    background: -moz-linear-gradient(center top , #555555, #373737) repeat scroll 0 0 transparent;
-    height: 20px;
-    left: 0;
-    position: fixed;
-    right: 200px;
-    top: 25px;
-    z-index: 10012;
-}
+  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
+  background: -moz-linear-gradient(center top, #555555, #373737) repeat scroll 0 0 transparent;
+  height: 25px;
+  left: 0;
+  position: fixed;
+  right: 200px;
+  top: 25px;
+  z-index: 10012; }
+
 .typo3-breadcrumbmenu {
-	background: -moz-linear-gradient(center top , #2D2D2D, #111111) repeat scroll 0 0 transparent;
-    bottom: 0;
-    height: 20px;
-    left: 0;
-    position: fixed;
-    right: 200px;
-    z-index: 10012;
-}
+  background: -moz-linear-gradient(center top, #2d2d2d, #111111) repeat scroll 0 0 transparent;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  height: 25px;
+  right: 200px;
+  z-index: 10012;
+  box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5); }
