@@ -55,9 +55,10 @@ body {
   z-index: 10011; }
 
 .t3-propertypanel-form fieldset {
-  border: 0; }
+  border: 0;
+  margin-bottom: 10px; }
   .t3-propertypanel-form fieldset .t3-propertypanel-field {
-    padding: 10px; }
+    padding: 10px 10px 0 10px; }
 .t3-propertypanel-form h2 {
   width: 100%;
   box-sizing: border-box;
@@ -111,17 +112,21 @@ body {
 
 .t3-toolbar-left li,
 .t3-toolbar-right li {
-  float: left; }
+  float: left;
+  margin-left: 10px; }
+  .t3-toolbar-left li:first-child,
+  .t3-toolbar-right li:first-child {
+    margin-left: 0; }
 
 button.t3-button {
-  background: -moz-linear-gradient(center top, #4b4b4b, #4c4c4c) repeat scroll 0 0 transparent;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: -moz-linear-gradient(center top, #777777, #333333) repeat scroll 0 0 transparent;
+  border: 1px solid rgba(0, 0, 0, 0.7);
   border-radius: 4px 4px 4px 4px;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
-  color: #ffffff;
+  color: #e4e4e4;
   -moz-box-shadow: 0 1px 0 #6a6a6a inset, -1px 0 0 rgba(66, 66, 66, 0.8), 1px 0 0 rgba(73, 73, 73, 0.8);
-  padding: 2px 4px;
+  padding: 1px 4px;
   text-shadow: 0 -1px 0 black;
   transition-property: background;
   transition-duration: 0.5s;
