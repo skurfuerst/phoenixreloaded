@@ -42,7 +42,8 @@ ContentModule = SC.Application.create({
 			],
 			right: [
 				ContentModule.Button.extend({
-					label: 'Revert'
+					label: 'Revert',
+					disabledBinding: 'ContentModule.ChangesController.noChanges'
 				}),
 				ContentModule.MenuSeparator,
 				ContentModule.Button.extend({
@@ -183,7 +184,7 @@ ContentModule.BlockSelectionController = SC.Object.create({
 		if (blocks === undefined || blocks === null) {
 			blocks = [];
 		}
-		
+
 		blocks = $.map(blocks, function(block) {
 			return {
 				id: block.id,
