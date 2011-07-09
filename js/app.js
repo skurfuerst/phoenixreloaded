@@ -1,7 +1,5 @@
 var ContentModule = SC.Application.create({
 	_bootstrap: function() {
-		SC.TEMPLATES['ContentModule.templateProperty_string'] = SC.Handlebars.compile('<input type="text" value="{{currentData}}" />');
-		SC.TEMPLATES['ContentModule.templateProperty_boolean'] = SC.Handlebars.compile('<input type="checkbox" />');
 		this._initializePropertyPanel();
 		this._initializeToolbar();
 		this._initializeFooter();
@@ -91,6 +89,8 @@ ContentModule.Breadcrumb.Item = SC.View.extend({
 });
 
 ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
+	id: 't3-page',
+	title: 'test',
 	tagName: 'a',
 	href: '#',
 	// TODO Don't need to bind here actually
@@ -100,6 +100,19 @@ ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
 		ContentModule.BlockSelectionController.selectPage();
 		event.stopPropagation();
 		return false;
+	}, 
+
+	getSchema: function() {
+		return [{
+					key: 'Main',
+					properties: [
+						{
+							key: 'title',
+							type: 'string',
+							label: 'Package'
+						}
+					]
+				}];
 	}
 });
 
@@ -160,6 +173,7 @@ ContentModule.PreviewController = SC.Object.create({
 	previewMode: false,
 
 	togglePreview: function(pressed) {
+		$('body').toggleClass('t3-backend');
 		this.set('previewMode', pressed);
 	}
 });
@@ -235,6 +249,12 @@ ContentModule.BlockSelectionController = SC.Object.create({
 
 	selectPage: function() {
 		Aloha.Block.BlockManager._deactivateActiveBlocks();
+
+		var blocks = [
+			new ContentModule.Breadcrumb.Page()
+		];
+
+		this.updateSelection(blocks);
 	},
 
 	selectItem: function(item) {
