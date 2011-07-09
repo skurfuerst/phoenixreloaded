@@ -162,14 +162,32 @@ body {
 	}
 }
 #t3-footer .t3-toolbar-left {
+	.t3-breadcrumb-page {
+		background: url(../images/breadcrumb-arrow-grey.png) right 50% no-repeat;
+		padding: 0 15px 0 12px;
+		float: left;
+		z-index: 100030;
+		position: relative;
+		button {
+			margin-right: 20px;
+		}
+		a {
+			color: #000000;
+			text-decoration: none;
+		}
+	}
 	> li:first-child {
-		background: url(../images/breadcrumb-arrow-grey.png) left 50% no-repeat;
+		padding: 0;
+	}
+	ul {
+		float: left;
 	}
 	ul li {
-		padding: 0 10px;
+		padding: 0 15px 0 20px;
 		color: #000000;
 		background: url(../images/breadcrumb-arrow-grey.png) right 50% no-repeat;
 		margin-left: -10px;
+		float: left;
 		a {
 			color: #000000;
 		}
@@ -199,6 +217,9 @@ body {
 		}
 		&:nth-child(2) {
 			z-index: 10028;
+		}
+		&:first-child {
+			z-index: 10029;
 		}
 		&:last-child {
 			background: url(../images/breadcrumb-arrow-orange.png) right 50% no-repeat;
