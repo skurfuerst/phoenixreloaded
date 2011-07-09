@@ -81,6 +81,9 @@ body {
 .t3-topbar li.t3-active {
 	background: -moz-linear-gradient(center top , #aaaaaa, #555555) repeat scroll 0 0 transparent;
 	text-shadow: 1px 1px 0 #444444;
+	box-shadow: 1px -4px 3px #222222, -1px -4px 3px #222222;
+	-moz-box-shadow: 1px -4px 3px #222222, -1px -4px 3px #222222;
+	-webkit-box-shadow: 1px -4px 3px #222222, -1px -4px 3px #222222;
 }
 
 /*** Property Panel ***/
@@ -240,16 +243,35 @@ button.t3-button {
     -webkit-transition-property: background;
     -webkit-transition-duration: 0.8s;
     cursor: pointer;
+	&:hover {
+		background: -moz-linear-gradient(center top , #aaaaaa, #666666) repeat scroll 0 0 transparent;
+	}
+	&:focus,
+	&:active {
+		background: -moz-linear-gradient(top, #cccccc 0%, #666666 70%, #888888 100%);
+		box-shadow: 0px 4px 3px #666666 inset;
+	}
+	&.pressed {
+		background: -moz-linear-gradient(center top , #f18f0b, #7c4700) repeat scroll 0 0 transparent;
+		&:hover {
+			background: -moz-linear-gradient(center top , #f69a1e, #925502) repeat scroll 0 0 transparent;
+		}
+		&:focus,
+		&:active {
+			background: -moz-linear-gradient(top, #f69a1e 0%, #925502 70%, #a66003 100%);
+			box-shadow: 0px 4px 3px #925502 inset;
+		}
+	}
 	&[disabled] {
 		opacity: 0.6;
 		cursor: auto;
 		color: #bbbbbb;
-		&:hover {
+		&:hover,
+		&:active,
+		&:focus {
 		    background: -moz-linear-gradient(center top , #999999, #555555) repeat scroll 0 0 transparent;
+		    box-shadow: 0 0 0 transparent;
 		}
-	}
-	&:hover {
-		background: -moz-linear-gradient(center top , #aaaaaa, #666666) repeat scroll 0 0 transparent;
 	}
 }
 #t3-footer {

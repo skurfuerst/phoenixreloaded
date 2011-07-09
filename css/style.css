@@ -54,7 +54,10 @@ body {
 
 .t3-topbar li.t3-active {
   background: -moz-linear-gradient(center top, #aaaaaa, #555555) repeat scroll 0 0 transparent;
-  text-shadow: 1px 1px 0 #444444; }
+  text-shadow: 1px 1px 0 #444444;
+  box-shadow: 1px -4px 3px #222222, -1px -4px 3px #222222;
+  -moz-box-shadow: 1px -4px 3px #222222, -1px -4px 3px #222222;
+  -webkit-box-shadow: 1px -4px 3px #222222, -1px -4px 3px #222222; }
 
 /*** Property Panel ***/
 .t3-rightarea {
@@ -198,14 +201,25 @@ button.t3-button {
   -webkit-transition-property: background;
   -webkit-transition-duration: 0.8s;
   cursor: pointer; }
+  button.t3-button:hover {
+    background: -moz-linear-gradient(center top, #aaaaaa, #666666) repeat scroll 0 0 transparent; }
+  button.t3-button:focus, button.t3-button:active {
+    background: -moz-linear-gradient(top, #cccccc 0%, #666666 70%, #888888 100%);
+    box-shadow: 0px 4px 3px #666666 inset; }
+  button.t3-button.pressed {
+    background: -moz-linear-gradient(center top, #f18f0b, #7c4700) repeat scroll 0 0 transparent; }
+    button.t3-button.pressed:hover {
+      background: -moz-linear-gradient(center top, #f69a1e, #925502) repeat scroll 0 0 transparent; }
+    button.t3-button.pressed:focus, button.t3-button.pressed:active {
+      background: -moz-linear-gradient(top, #f69a1e 0%, #925502 70%, #a66003 100%);
+      box-shadow: 0px 4px 3px #925502 inset; }
   button.t3-button[disabled] {
     opacity: 0.6;
     cursor: auto;
     color: #bbbbbb; }
-    button.t3-button[disabled]:hover {
-      background: -moz-linear-gradient(center top, #999999, #555555) repeat scroll 0 0 transparent; }
-  button.t3-button:hover {
-    background: -moz-linear-gradient(center top, #aaaaaa, #666666) repeat scroll 0 0 transparent; }
+    button.t3-button[disabled]:hover, button.t3-button[disabled]:active, button.t3-button[disabled]:focus {
+      background: -moz-linear-gradient(center top, #999999, #555555) repeat scroll 0 0 transparent;
+      box-shadow: 0 0 0 transparent; }
 
 #t3-footer {
   background: -moz-linear-gradient(center top, #2d2d2d, #111111) repeat scroll 0 0 transparent;
