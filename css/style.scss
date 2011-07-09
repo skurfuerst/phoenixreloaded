@@ -172,7 +172,7 @@ body {
 			margin-right: 20px;
 		}
 		a {
-			color: #000000;
+			color: #ffffff;
 			text-decoration: none;
 		}
 	}
@@ -183,13 +183,13 @@ body {
 		float: left;
 	}
 	ul li {
-		padding: 0 15px 0 20px;
-		color: #000000;
+		padding: 0 15px 0 30px;
+		color: #ffffff;
 		background: url(../images/breadcrumb-arrow-grey.png) right 50% no-repeat;
-		margin-left: -10px;
+		margin-left: -25px;
 		float: left;
 		a {
-			color: #000000;
+			color: #ffffff;
 		}
 		&:nth-child(10) {
 			z-index: 10020;
