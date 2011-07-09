@@ -268,16 +268,17 @@ Handlebars.registerHelper('propertyEditWidget', function(propertySchema) {
 
 	var path = ContentModule.propertyTypeMap[contextData.type];
 	// todo: understand all options and clean
-	options = {};
-	options.data = {};
-	options.data.view = this;
-	options.hash = {};
-	options.hash.class = contextData.key;
-	// todo: set block attributes into SC object to bind value here
-	options.hash.value = block.attr(contextData.key);
-	
+	options = {
+		data: {
+			view: this
+		},
+		hash: {
+			class: contextData.key,
+				// todo: set block attributes into SC object to bind value here
+			value: block.attr(contextData.key)
+		}
 
-	console.log(options.value);
+	};
 
 	return SC.Handlebars.ViewHelper.helper(this, path, options);
 });
