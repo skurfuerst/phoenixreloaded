@@ -173,7 +173,37 @@ ContentModule.PreviewController = SC.Object.create({
 	previewMode: false,
 
 	togglePreview: function(pressed) {
-		$('body').toggleClass('t3-backend');
+		var i = 0, count = 4, allDone = function() {
+			i++;
+			if (i >= count) {
+				$('body').toggleClass('t3-backend');
+			}
+		};
+		if (pressed) {
+			$('#t3-footer').animate({
+				height: 0
+			}, 'fast', allDone);
+			$('#t3-toolbar').animate({
+				top: 0,
+				right: 0
+			}, 'fast', allDone);
+			$('#t3-ui-top').slideUp('fast', allDone);
+			$('#t3-ui-rightarea').animate({
+				width: 0
+			}, 'fast', allDone);
+		} else {
+			$('#t3-footer').animate({
+				height: 30
+			}, 'fast', allDone);
+			$('#t3-toolbar').animate({
+				top: 25,
+				right: 200
+			}, 'fast', allDone);
+			$('#t3-ui-top').slideDown('fast', allDone);
+			$('#t3-ui-rightarea').animate({
+				width: 200
+			}, 'fast', allDone);
+		}
 		this.set('previewMode', pressed);
 	}
 });
