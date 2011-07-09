@@ -81,14 +81,16 @@ body {
   margin-bottom: 10px; }
   .t3-propertypanel-form fieldset .t3-propertypanel-field {
     padding: 10px 10px 0 10px; }
+    .t3-propertypanel-form fieldset .t3-propertypanel-field div {
+      padding-bottom: 10px; }
 .t3-propertypanel-form h2 {
   width: 100%;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   padding: 0 10px;
-  height: 25px;
-  line-height: 25px;
+  height: 30px;
+  line-height: 30px;
   background: -moz-linear-gradient(center top, #555555, #373737) repeat scroll 0 0 transparent;
   color: #ffffff;
   font-weight: normal; }
