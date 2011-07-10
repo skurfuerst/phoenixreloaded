@@ -234,7 +234,7 @@ ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
 		return false;
 	},
 
-	getSchema: function() {
+	schema: function() {
 		return [{
 					key: 'Main',
 					properties: [
@@ -245,7 +245,7 @@ ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
 						}
 					]
 				}];
-	}
+	}.property().cacheable()
 });
 
 ContentModule.MenuSeparator = SC.View.extend({
@@ -399,7 +399,12 @@ ContentModule.BlockSelectionController = SC.Object.create({
 		}
 		if (blocks.length > 0 && typeof blocks[0].getSchema !== 'undefined') {
 			blocks = $.map(blocks, function(alohaBlock) {
-				return ContentModule.BlockManager.getBlockProxy(alohaBlock);
+
+				if (alohaBlock.id === 't3-page') {
+					return alohaBlock; // FIXME: Special case for editing pages
+				} else {
+					return ContentModule.BlockManager.getBlockProxy(alohaBlock);
+				}
 			});
 		}
 		this.set('blocks', blocks);
