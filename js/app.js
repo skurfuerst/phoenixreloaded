@@ -3,14 +3,15 @@ var ContentModule = SC.Application.create({
 		this._initializePropertyPanel();
 		this._initializeToolbar();
 		this._initializeFooter();
+		this._initializeLauncher();
 
-		$('body').addClass('t3-ui-controls-active'); // TODO: should be only set when header and property panel is visible
-
+		 // TODO: should be only set when header and property panel is visible
+		$('body').addClass('t3-ui-controls-active');
 		$('body').addClass('t3-backend');
 	},
 
 	_initializePropertyPanel: function() {
-		$('body').append($('<div class="t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
+		$('body').append($('<div class="t3-ui t3-rightarea aloha-block-do-not-deactivate" id="t3-ui-rightarea"></div>'));
 
 		var propertyPanelView = SC.View.create({
 			template: SC.Handlebars.compile('<form class="t3-propertypanel-form" action="#"> {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlock.schema"}}<h2>{{content.key}}</h2> {{#collection tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}} <label for="">{{content.label}}</label> {{propertyEditWidget content}} {{/collection}} {{/collection}} {{#view SC.Button}}Save{{/view}} {{#view SC.Button}}Reset{{/view}}</form>')
@@ -22,6 +23,7 @@ var ContentModule = SC.Application.create({
 	_initializeToolbar: function() {
 		var toolbar = ContentModule.Toolbar.create({
 			elementId: 't3-toolbar',
+			classNames: ['t3-ui'],
 			left: [
 				ContentModule.ToggleButton.extend({
 					label: 'Pages'
@@ -50,12 +52,20 @@ var ContentModule = SC.Application.create({
 		toolbar.appendTo($('body'));
 	},
 
+	_initializeLauncher: function() {
+		var launcher = T3.Common.Launcher.create({
+			modulesBinding: 'T3.Common.ModulesController'
+		});
+		launcher.appendTo($('#t3-ui-top'));
+	},
+
 	_initializeFooter: function() {
 		var breadcrumb = ContentModule.Breadcrumb.extend({
 			contentBinding: 'ContentModule.BlockSelectionController.blocks'
 		});
 		var footer = ContentModule.Toolbar.create({
 			elementId: 't3-footer',
+			classNames: ['t3-ui'],
 			left: [
 				breadcrumb
 			]
@@ -66,6 +76,70 @@ var ContentModule = SC.Application.create({
 	_onBlockSelectionChange: function(blocks) {
 		ContentModule.BlockSelectionController.updateSelection(blocks);
 	}
+});
+
+var T3 = window.T3 || {};
+T3.Common = T3.Common || {};
+
+T3.Common.ModulesController = SC.ArrayProxy.create({
+	content: [
+		{
+			label: 'Users',
+			path: '/users'
+		},
+		{
+			label: 'Templates',
+			path: '/templates'
+		},
+		{
+			label: 'Configuration',
+			path: '/configuration'
+		},
+		{
+			label: 'Asset management',
+			path: '/asset_management'
+		}
+	]
+});
+
+T3.Common.Launcher = SC.View.extend({
+	tagName: 'div',
+	classNames: ['t3-launcher'],
+	value: '',
+	open: false,
+	template: SC.Handlebars.compile('<div class="t3-launcher-container">{{view T3.Common.Launcher.TextField openBinding="parentView.open" valueBinding="parentView.value" placeholder="Do what you want." }}</div><div class="t3-launcher-logo"></div>{{view T3.Common.Launcher.Panel openBinding="parentView.open" modulesBinding="parentView.modules"}}')
+});
+
+T3.Common.Launcher.TextField = SC.TextField.extend({
+	cancel: function() {
+		this.set('value', '');
+		this.$().blur();
+	},
+	focusIn: function() {
+		this.set('value', '');
+		this.set('open', true);
+	},
+	focusOut: function() {
+		this.set('open', false);
+		this._super();
+	}
+});
+
+T3.Common.Launcher.Panel = SC.View.extend({
+	tagName: 'div',
+	classNames: ['t3-launcher-panel'],
+	classNameBindings: ['open'],
+	isVisible: false,
+	open: false,
+	templateName: 'launcher-panel',
+	_openDidChange: function() {
+		var open = this.get('open'), that = this;
+		if (open) {
+			this.$().slideDown('fast');
+		} else {
+			this.$().slideUp('fast');
+		}
+	}.observes('open')
 });
 
 ContentModule.Breadcrumb = SC.View.extend({
@@ -173,13 +247,21 @@ ContentModule.PreviewController = SC.Object.create({
 	previewMode: false,
 
 	togglePreview: function(pressed) {
-		var i = 0, count = 4, allDone = function() {
+		var i = 0, count = 5, allDone = function() {
 			i++;
 			if (i >= count) {
-				$('body').toggleClass('t3-backend');
+				if (pressed) {
+					$('body').removeClass('t3-ui-controls-active');
+				} else {
+					$('body').addClass('t3-ui-controls-active');
+				}
 			}
 		};
 		if (pressed) {
+			$('body').animate({
+				'margin-top': 30,
+				'margin-right': 0
+			}, 'fast', allDone);
 			$('#t3-footer').animate({
 				height: 0
 			}, 'fast', allDone);
@@ -192,11 +274,15 @@ ContentModule.PreviewController = SC.Object.create({
 				width: 0
 			}, 'fast', allDone);
 		} else {
+			$('body').animate({
+				'margin-top': 55,
+				'margin-right': 200
+			}, 'fast', allDone);
 			$('#t3-footer').animate({
 				height: 30
 			}, 'fast', allDone);
 			$('#t3-toolbar').animate({
-				top: 25,
+				top: 45,
 				right: 200
 			}, 'fast', allDone);
 			$('#t3-ui-top').slideDown('fast', allDone);
@@ -318,7 +404,7 @@ Handlebars.registerHelper('propertyEditWidget', function(propertySchema) {
 			view: this
 		},
 		hash: {
-			class: contextData.key,
+			'class': contextData.key,
 				// todo: set block attributes into SC object to bind value here
 			value: block.attr(contextData.key)
 		}

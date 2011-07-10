@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html version="HTML+RDFa 1.1" xmlns:typo3="http://www.typo3.org/ns/2011/FLOW3/Packages/TYPO3/Content/">
+
+<head>
+
+<title>Home</title>
+<meta charset="UTF-8" />
+
+<link rel="stylesheet" type="text/css" href="website/StyleSheets/stylesheet.css" media="screen" />
+
+<script language="javascript">
+		Aloha = window.Aloha || {};
+
+		Aloha.settings = {
+			plugins: {
+				block: {
+					defaults: {
+						'.t3-plugin': {
+							'block-type': 'PluginBlock'
+						},
+						'.t3-text': {
+							'block-type': 'TextBlock'
+						}
+					},
+					sidebarAttributeEditor: false
+				}
+			},
+			bundles: {
+				phoenix: '../../../alohaplugins' // relative to aloha.js base path...
+			}
+		};
+	</script>
+	<!--
+	<script src="js/require.js" data-main="js/contentmodule-main.js" id="aloha-script-include" data-plugins="common/block,common/paste,phoenix/phoenixintegration"></script>
+	<link rel="stylesheet" href="js/libs/aloha/src/aloha.css" type="text/css">
+	-->
+	<link rel="stylesheet" href="index.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+</head>
+<body typeof="typo3:TYPO3:Page" id="t3-body" about="/sites/phoenixdemotypo3org/homepage" class="t3-page" data-title="Home">
+			<div id="navigationAids">
+				<ul>
+					<li><a href="#navigation">Skip to navigation</a></li>
+					<li><a href="#mainContent">Skip to content</a></li>
+
+				</ul>
+			</div>
+			<div id="outerWrap">
+
+					<div id="header">
+						<h1>TYPO3 Phoenix Demo Site</h1>
+						<div id="topMenu">
+							<ul>
+								<li>Workspace: live</li>
+
+								<li><a target="_top" href="/typo3">Backend login</a></li>
+							</ul>
+						</div>
+						<div id="searchBox">
+							<form id="search_form" method="post" action="/">
+								<input type="text" id="inputText" value="Future Search" />
+								<input type="image" src="website/Images/bg_searchButton.gif" width="20" height="20" id="inputButton" alt="Search" title="Search" />
+							</form>
+
+						</div>
+
+					</div>
+
+				<div id="navigationFirstLevel">
+					<h2>First Level Navigation</h2>
+					<div id="navigationFirstLevelMenu">
+
+
+
+	<ul>
+
+			<li class="normal">
+				<a href="homepage/anotherpage.html">Another Page</a>
+
+
+			</li>
+
+			<li class="normal">
+				<a href="homepage/secondpage.html">Second Page</a>
+
+			</li>
+
+			<li class="normal">
+				<a href="homepage/fourthpage.html">Fourth Page</a>
+
+			</li>
+
+	</ul>
+
+
+
+
+					</div>
+				</div>
+				<div id="contentWrap">
+					<div id="navigationSecondLevel">
+						<div id="navigationSecondLevelMenu">
+
+
+
+	<ul>
+
+			<li class="current">
+
+				<a href="homepage.html">Home</a>
+
+
+	<ul>
+
+			<li class="normal">
+				<a href="homepage/anotherpage.html">Another Page</a>
+
+			</li>
+
+			<li class="normal">
+				<a href="homepage/secondpage.html">Second Page</a>
+
+
+			</li>
+
+			<li class="normal">
+				<a href="homepage/fourthpage.html">Fourth Page</a>
+
+			</li>
+
+	</ul>
+
+
+			</li>
+
+	</ul>
+
+
+
+						</div>
+						<div id="navigationContent">
+							<p>This website demonstrates a few basic features of TYPO3 Phoenix, the next generation of the TYPO3 CMS.</p>
+						</div>
+					</div>
+					<div id="main">
+						<div id="breadcrumb">
+
+
+
+
+
+		&gt; <a href="homepage.html">Home</a>
+
+
+
+						</div>
+						<div id="mainContent">
+
+<div class="t3-contentelement t3-text">
+
+<h1>I'm here to be defaced ;-)</h1>
+<div class="t3-content"><p>This is the TYPO3 Phoenix demo website. It's there to let you experiment with the features
+						TYPO3 Phoenix already provides in this alpha stage.
+	</p></div>
+</div>
+
+<div class="t3-contentelement t3-plugin" data-package="PhoenixDemoTypo3Org" data-controller="Registration" about="/sites/phoenixdemotypo3org/homepage/main/registration"><h2>Try me</h2>
+
+<p>Just create a demo account and try out our latest development of the TYPO3 Phoenix user interface. Get a first impression of Aloha, the content editor, and try out the simple publishing mechanism based on workspaces.</p>
+<form method="post" action="homepage.html?f3_phoenixdemotypo3org_typoscript_registration%5B%40action%5D=createaccount&amp;f3_phoenixdemotypo3org_typoscript_registration%5B%40controller%5D=registration&amp;f3_phoenixdemotypo3org_typoscript_registration%5B%40package%5D=phoenixdemotypo3org#registration">
+<div style="display: none">
+<input type="hidden" name="f3_phoenixdemotypo3org_typoscript_registration[__referrer][@package]" value="PhoenixDemoTypo3Org" />
+<input type="hidden" name="f3_phoenixdemotypo3org_typoscript_registration[__referrer][@subpackage]" value="" />
+<input type="hidden" name="f3_phoenixdemotypo3org_typoscript_registration[__referrer][@controller]" value="Registration" />
+<input type="hidden" name="f3_phoenixdemotypo3org_typoscript_registration[__referrer][@action]" value="newAccount" />
+<input type="hidden" name="f3_phoenixdemotypo3org_typoscript_registration[__referrer][arguments]" value="a:0:{}" />
+<input type="hidden" name="__referrer[@package]" value="TYPO3" />
+<input type="hidden" name="__referrer[@subpackage]" value="" />
+<input type="hidden" name="__referrer[@controller]" value="Frontend\Node" />
+<input type="hidden" name="__referrer[@action]" value="show" />
+<input type="hidden" name="__referrer[arguments]" value="a:1:{s:4:&quot;node&quot;;s:35:&quot;/sites/phoenixdemotypo3org/homepage&quot;;}" />
+
+</div>
+
+	<fieldset>
+
+		<dl>
+
+
+
+<dt>
+	<label for="username">Username:</label>
+</dt>
+<dd>
+	<input id="username" type="text" name="f3_phoenixdemotypo3org_typoscript_registration[registration][username]" value="demo6972159" />
+</dd>
+
+
+
+<dt>
+	<label for="password">Password:</label>
+
+</dt>
+<dd>
+	<input id="password" type="text" name="f3_phoenixdemotypo3org_typoscript_registration[registration][password]" value="demo" />
+</dd>
+
+
+
+<dt>
+	<label for="firstName">First name:</label>
+</dt>
+<dd>
+	<input id="firstName" type="text" name="f3_phoenixdemotypo3org_typoscript_registration[registration][firstName]" value="John" />
+</dd>
+
+
+
+<dt>
+
+	<label for="lastName">Last name:</label>
+</dt>
+<dd>
+	<input id="lastName" type="text" name="f3_phoenixdemotypo3org_typoscript_registration[registration][lastName]" value="Doe" />
+</dd>
+			<dt></dt>
+			<dd><input class="button" type="submit" name="" value="Create Account" /></dd>
+		</dl>
+	</fieldset>
+</form></div>
+
+<div class="t3-text">
+	<h1>Content</h1>
+	<div class="t3-content">The content for this site was created by importing the XML file found at <code>Resources/Private/Content/Content.xml</code>in the PhoenixDemoTypo3Org package.</div>
+</div>
+
+
+						</div>
+					</div>
+
+						<div id="secondary">
+
+							<div id="secondayContent">
+								<div class="secondaryContentSection">
+									<div class="t3-contentelement" about="/sites/phoenixdemotypo3org/homepage/secondary/latesttweets"><h2>Latest Tweets</h2>
+<!--<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+	if (typeof TWTR != 'undefined') {
+		new TWTR.Widget({
+			version: 2,
+			type: 'search',
+			search: 'TYPO3 Phoenix',
+			interval: 6000,
+			//title: 'Latest tweets about',
+			subject: 'on TYPO3 Phoenix',
+			width: 'auto',
+			height: 300,
+			theme: {
+				shell: {
+					background: '#F2F2F2',
+					color: '#000000'
+				},
+				tweets: {
+					background: '#F2F2F2',
+					color: '#000000',
+					links: '#f18d0b'
+				}
+			},
+			features: {
+				scrollbar: false,
+				loop: true,
+				live: true,
+				hashtags: true,
+				timestamp: true,
+				avatars: false,
+				toptweets: true,
+				behavior: 'default'
+			}
+		}).render().start();
+	}
+</script>--></div>
+
+<h1>HTML Element</h1><p>This shows a default HTML element</p><a href="http://phoenix.demo.typo3.org/" target="_blank">Phoenix demo page</a>
+
+								</div>
+							</div>
+						</div>
+
+				</div>
+
+					<div id="footer">
+						<h3>Footer</h3>
+						<div id="footerMenu">
+							<p>
+
+								<a href="http://www.typo3.org/">TYPO3 Phoenix</a> &middot;
+								<a href="http://flow3.typo3.org">Powered by FLOW3</a>
+								<img src="website/Images/FLOW3-Logo-11px.png" width="11" height="11" alt="FLOW3 Logo" />
+							</p>
+						</div>
+					</div>
+
+			</div>
+
+		<!-- MODIFICATIONS FOR BACKEND START -->
+
+		<div id="t3-ui-top" class="aloha-block-do-not-deactivate t3-ui">
+			<ul class="t3-topbar">
+				<li class="t3-active">Content</li>
+				<li>Management</li>
+			</ul>
+			<a class="t3-button t3-button-logout t3-icon-logout" href=""><span>Logout</span></a>
+			<div class="t3-clear"></div>
+		</div>
+
+		<script type="text/html" id="launcher-panel">
+			<div class="three-columns tc-1-1-1">
+				<div class="c-1">
+					<h2>Modules</h2>
+					{{#collection contentBinding="parentView.modules" tagName="ul"}}
+						{{#view tagName="a" attributeBindings="href" hrefBinding="parentView.content.path"}}{{parentView.content.label}}{{/view}}
+					{{/collection}}
+				</div>
+				<div class="c-2">
+					<h2>Data</h2>
+					<ul>
+						<li>...</li>
+					</ul>
+				</div>
+				<div class="c-3">
+					<h2>Last actions</h2>
+					<ul>
+						<li>...</li>
+					</ul>
+				</div>
+			</div>
+		</script>
+
+		<script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
+		<script src="js/libs/sproutcore.js"></script>
+		<script src="js/app.js"></script>
+
+	</body>
+</html>

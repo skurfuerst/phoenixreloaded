@@ -1,8 +1,27 @@
+.t3-ui div, .t3-ui dl, .t3-ui dt, .t3-ui dd, .t3-ui ul, .t3-ui ol, .t3-ui li, .t3-ui h1, .t3-ui h2, .t3-ui h3, .t3-ui h4, .t3-ui h5, .t3-ui h6, .t3-ui pre, .t3-ui form, .t3-ui fieldset, .t3-ui input, .t3-ui p, .t3-ui blockquote, .t3-ui th, .t3-ui td {
+  margin: 0;
+  padding: 0; }
+.t3-ui img {
+  border: 0; }
+.t3-ui address, .t3-ui caption, .t3-ui cite, .t3-ui code, .t3-ui dfn, .t3-ui em, .t3-ui strong, .t3-ui th, .t3-ui var {
+  font-style: normal;
+  font-weight: normal; }
+.t3-ui ol, .t3-ui ul {
+  list-style: none; }
+.t3-ui caption, .t3-ui th {
+  text-align: left; }
+.t3-ui h1, .t3-ui h2, .t3-ui h3, .t3-ui h4, .t3-ui h5, .t3-ui h6 {
+  font-size: 100%; }
+.t3-ui q:before,
+.t3-ui q:after {
+  content: ''; }
+
 /** CSS start **/
-body {
+body.t3-ui-controls-active {
   margin-right: 200px;
   margin-bottom: 30px;
-  margin-top: 55px; }
+  margin-top: 80px;
+  margin-left: 0; }
 
 #t3-footer,
 #t3-toolbar,
@@ -21,22 +40,76 @@ body {
   top: 0;
   position: fixed;
   width: 100%;
-  height: 25px;
-  line-height: 25px;
+  height: 50px;
   z-index: 10015; }
-  #t3-ui-top img.t3-logo {
-    position: absolute;
-    right: 5px;
-    top: 1px; }
   #t3-ui-top .t3-button-logout {
     position: absolute;
-    right: 35px;
+    right: 10px;
+    line-height: 25px;
     top: -2px;
     color: #cccccc;
     text-decoration: underline;
     font-size: 10px; }
     #t3-ui-top .t3-button-logout:hover, #t3-ui-top .t3-button-logout:active, #t3-ui-top .t3-button-logout:focus {
       text-decoration: none; }
+
+.t3-launcher {
+  position: relative;
+  width: 100%;
+  height: 25px; }
+  .t3-launcher div.t3-launcher-container {
+    height: 25px;
+    border: 0;
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 35px; }
+    .t3-launcher div.t3-launcher-container input {
+      border: 0;
+      background: transparent;
+      font-size: 16px;
+      width: 100%;
+      height: 100%;
+      line-height: 25px;
+      padding: 0 6px;
+      background-color: #F7EEE1;
+      box-shadow: 0px 0px 3px #222 inset;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box; }
+      .t3-launcher div.t3-launcher-container input.t3-example-text {
+        color: #aaa; }
+      .t3-launcher div.t3-launcher-container input:focus {
+        transition-property: background;
+        transition-duration: 0.5s;
+        -moz-transition-property: background;
+        -moz-transition-duration: 0.5s;
+        -webkit-transition-property: background;
+        -webkit-transition-duration: 0.5s;
+        background: #fff; }
+  .t3-launcher .t3-launcher-logo {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    width: 25px;
+    height: 25px;
+    background: url("../images/typo3-logo.png") no-repeat; }
+  .t3-launcher .t3-launcher-panel {
+    position: absolute;
+    height: 200px;
+    left: 10px;
+    top: 25px;
+    right: 230px;
+    border-radius: 0 0 10px 10px;
+    background: -moz-linear-gradient(center top, white, #fce4c4) repeat scroll 0 0 transparent;
+    padding: 15px;
+    opacity: 0.9; }
+
+ul.t3-topbar {
+  line-height: 25px;
+  float: left;
+  margin: 0;
+  padding: 0; }
 
 .t3-topbar li {
   float: left;
@@ -64,7 +137,7 @@ body {
   -webkit-box-sizing: border-box;
   background: -moz-linear-gradient(center top, #2d2d2d, #111111) repeat scroll 0 0 transparent;
   height: 100%;
-  margin-top: 25px;
+  margin-top: 50px;
   position: fixed;
   right: 0;
   top: 0;
@@ -106,15 +179,12 @@ body {
 
 /*** Toolbar ***/
 #t3-toolbar {
-  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
-  background: -moz-linear-gradient(center top, #555555, #373737) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(center top, #666666, #373737) repeat scroll 0 0 transparent;
   height: 30px;
   left: 0;
   position: fixed;
   right: 200px;
-  top: 25px;
+  top: 50px;
   z-index: 10012; }
 
 .t3-toolbar-left {
@@ -226,9 +296,9 @@ button.t3-button {
   height: 30px;
   right: 200px;
   z-index: 10012;
-  box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: -1px -2px 3px rgba(0, 0, 0, 0.5); }
+  box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.4); }
 
 .t3-add-below-handle,
 .t3-add-above-handle {
@@ -295,3 +365,20 @@ div.aloha-block:hover > div.aloha-block-inner {
   box-shadow: 0px 0px 0px transparent;
   -moz-box-shadow: 0px 0px 0px transparent;
   -webkit-box-shadow: 0px 0px 0px transparent; }
+
+.three-columns {
+  width: 100%;
+  float: left;
+  clear: both; }
+
+.tc-1-1-1 .c-1,
+.tc-1-1-1 .c-2,
+.tc-1-1-1 .c-3 {
+  float: left;
+  width: 33%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+.tc-1-1-1 .c-3 {
+  float: right; }
