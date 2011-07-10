@@ -20,6 +20,11 @@ function(block) {
 				// TODO implement
 				return false;
 			});*/
+			if (this.attr('_status')) {
+				// FIXME: do not output _status directly, but do it using CSS or localization.
+				var statusIndicator = $('<span class="t3-status-indicator t3-status-indicator-' + this.attr('_status')  + '">' + this.attr('_status') + '</span>');
+				this.element.prepend(statusIndicator);
+			}
 		}
 	});
 

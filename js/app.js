@@ -462,6 +462,7 @@ ContentModule.Block = SC.Object.extend({
 	// Some hack which is fired when we change a property. Should be replaced with a proper API method which should be fired *every time* a property is changed.
 	_somePropertyChanged: function(that, propertyName) {
 		var alohaBlock = Aloha.Block.BlockManager.getBlock(this.get('alohaBlockId'));
+		// Save original property back to Aloha Block
 		alohaBlock.attr(propertyName, this.get(propertyName));
 
 		var hasChanges = false;
@@ -471,8 +472,10 @@ ContentModule.Block = SC.Object.extend({
 			}
 		});
 		if (hasChanges) {
+			alohaBlock.attr('_status', 'modified');
 			ContentModule.ChangesController.addChange(this);
 		} else {
+			alohaBlock.attr('_status', '');
 			ContentModule.ChangesController.removeChange(this);
 		}
 	},

@@ -355,6 +355,32 @@ button.t3-button {
 .t3-contentelement-selected .aloha-block-active:hover > .t3-add-below-handle {
   display: block; }
 
+.t3-status-indicator {
+  position: absolute;
+  left: -1px;
+  bottom: -17px;
+  width: 50px;
+  height: 16px;
+  overflow: hidden;
+  font-size: 9px;
+  border-width: 0 1px 1px 1px;
+  border-style: none solid solid solid;
+  border-radius: 0 0 5px 5px;
+  display: block;
+  background: white;
+  z-index: 10000;
+  text-align: center;
+  border-color: #CCC;
+  box-shadow: 0px 1px 3px #cccccc;
+  -moz-box-shadow: 0px 1px 3px #cccccc;
+  -webkit-box-shadow: 0px 1px 3px #cccccc; }
+
+.aloha-block:hover > .t3-status-indicator {
+  box-shadow: 0px 1px 3px #909090;
+  -moz-box-shadow: 0px 1px 3px #909090;
+  -webkit-box-shadow: 0px 1px 3px #909090;
+  border-color: #999; }
+
 div.aloha-block > div.aloha-block-inner {
   outline: 1px solid #cccccc; }
 
