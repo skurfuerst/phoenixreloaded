@@ -16,15 +16,14 @@ var ContentModule = SC.Application.create({
 		var propertyPanelView = SC.View.create({
 			template: SC.Handlebars.compile('\
 <form class="t3-propertypanel-form" action="#">\
-  {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlock"}}\
-  {{/collection}} \
-</form>')
-//   <h2>{{content.key}}</h2>\
-
-/* {{#collection tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}}\
+  {{#collection tagName="fieldset" classNames="t3-propertypanel-section" contentBinding="ContentModule.BlockSelectionController.selectedBlockSchema"}}\
+	<h2>{{content.key}}</h2>\
+    {{#collection tagName="div" classNames="t3-propertypanel-field" contentBinding="parentView.content.properties"}}\
       <label for="">{{content.label}}</label>\
       {{propertyEditWidget noMatterWhatITypeHere}}\
-    {{/collection}} \*/
+    {{/collection}}\
+  {{/collection}} \
+</form>')
 		});
 		propertyPanelView.appendTo($('.t3-rightarea'));
 	},
@@ -269,7 +268,7 @@ ContentModule.Button = SC.Button.extend({
 	iconClass: function() {
 		var icon = this.get('icon');
 		return icon !== '' ? 't3-icon-' + icon : '';
-	}.property('icon')
+	}.property('icon').cacheable()
 });
 
 ContentModule.ToggleButton = ContentModule.Button.extend({
@@ -396,15 +395,16 @@ ContentModule.BlockSelectionController = SC.Object.create({
 		this._updating = false;
 	},
 
-	getSelectedBlock: function() {
-		var blocks = this.get('blocks');
-		return blocks.length > 0 ? blocks[0]: null;
-	},
-
 	selectedBlock: function() {
 		var blocks = this.get('blocks');
 		return blocks.length > 0 ? blocks[0]: null;
-	}.property('blocks'),
+	}.property('blocks').cacheable(),
+
+	selectedBlockSchema: function() {
+		var selectedBlock = this.get('selectedBlock');
+		if (!selectedBlock) return;
+		return selectedBlock.get('schema');
+	}.property('selectedBlock').cacheable(),
 
 	selectPage: function() {
 		Aloha.Block.BlockManager._deactivateActiveBlocks();
@@ -487,14 +487,14 @@ Handlebars.registerHelper('propertyEditWidget', function(x) {
 		hash: {
 			'class': contextData.key,
 				// todo: set block attributes into SC object to bind value here
-			value: val,
+			//value: val,
 			/*theValueChange: function() {
 				//console.log(block.get(contextData.key), "XX");
 				//var val = this.get('value');
 				//console.log(block);
 				//block.set(contextData.key, val);
 			}.observes('value')*/
-			//valueBinding: "ContentModule.BlockSelectionController.selectedBlock." + contextData.key //block.get(contextData.key)
+			valueBinding: "ContentModule.BlockSelectionController.selectedBlock." + contextData.key //block.get(contextData.key)
 		}
 	};
 
