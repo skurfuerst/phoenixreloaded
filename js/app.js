@@ -54,8 +54,29 @@ var ContentModule = SC.Application.create({
 
 	_initializeLauncher: function() {
 		var launcher = T3.Common.Launcher.create({
-			modulesBinding: 'T3.Common.ModulesController'
+			modulesBinding: 'T3.Common.ModulesController.filteredModules',
+			valueBinding: 'T3.Common.ModulesController.filterValue'
 		});
+		// FIXME Just a fixture, use remote loading or JSON injection of available modules
+		var modules = [
+			{
+				label: 'Users',
+				url: '/users'
+			},
+			{
+				label: 'Templates',
+				url: '/templates'
+			},
+			{
+				label: 'Configuration',
+				url: '/configuration'
+			},
+			{
+				label: 'Asset management',
+				url: '/asset_management'
+			}
+		];
+		T3.Common.ModulesController.setAvailableModules(modules);
 		launcher.appendTo($('#t3-ui-top'));
 	},
 
@@ -81,25 +102,27 @@ var ContentModule = SC.Application.create({
 var T3 = window.T3 || {};
 T3.Common = T3.Common || {};
 
-T3.Common.ModulesController = SC.ArrayProxy.create({
-	content: [
-		{
-			label: 'Users',
-			path: '/users'
-		},
-		{
-			label: 'Templates',
-			path: '/templates'
-		},
-		{
-			label: 'Configuration',
-			path: '/configuration'
-		},
-		{
-			label: 'Asset management',
-			path: '/asset_management'
+T3.Common.ModulesController = SC.Object.create({
+	availableModules: [],
+	filterValue: null,
+	filteredModules: [],
+	setAvailableModules: function(modules) {
+		var wrappedModules = modules.map(function(module) {
+			return SC.Object.create(module);
+		});
+		this.set('availableModules', wrappedModules);
+		this.set('filteredModules', wrappedModules);
+	},
+	_filterValueChange: function() {
+		var lcFilterValue = this.get('filterValue').toLowerCase();
+		if (lcFilterValue === '') {
+			this.set('filteredModules', this.get('availableModules'));
+		} else {
+			this.set('filteredModules', this.get('availableModules').filter(function(module) {
+				return module.get('label').toLowerCase().indexOf(lcFilterValue) >= 0;
+			}, this));
 		}
-	]
+	}.observes('filterValue')
 });
 
 T3.Common.Launcher = SC.View.extend({
@@ -122,6 +145,13 @@ T3.Common.Launcher.TextField = SC.TextField.extend({
 	focusOut: function() {
 		this.set('open', false);
 		this._super();
+	},
+	keyDown: function(event) {
+		// TODO Move to controller
+		if (event.keyCode === 9) {
+			this.$().closest('.t3-launcher').find('.t3-launcher-panel-modules li:first-child a').first().focus();
+			return false;
+		}
 	}
 });
 
@@ -131,15 +161,27 @@ T3.Common.Launcher.Panel = SC.View.extend({
 	classNameBindings: ['open'],
 	isVisible: false,
 	open: false,
+	focussed: false,
 	templateName: 'launcher-panel',
 	_openDidChange: function() {
-		var open = this.get('open'), that = this;
-		if (open) {
-			this.$().slideDown('fast');
-		} else {
-			this.$().slideUp('fast');
-		}
-	}.observes('open')
+		var that = this;
+		// Delay the execution a bit to give the focus change a chance
+		setTimeout(function() {
+			var open = that.get('open');
+			if (open) {
+				that.$().slideDown('fast');
+			} else {
+				if (that.get('focussed')) return;
+				that.$().slideUp('fast');
+			}
+		}, 50);
+	}.observes('open'),
+	focusIn: function() {
+		this.set('focussed', true);
+	},
+	focusOut: function() {
+		this.set('focussed', false);
+	}
 });
 
 ContentModule.Breadcrumb = SC.View.extend({
