@@ -207,6 +207,7 @@ ContentModule.Breadcrumb = SC.View.extend({
 ContentModule.Breadcrumb.Item = SC.View.extend({
 	tagName: 'a',
 	href: '#',
+
 	// TODO Don't need to bind here actually
 	attributeBindings: ['href'],
 	template: SC.Handlebars.compile('{{item._title}}'),
@@ -223,6 +224,7 @@ ContentModule.Breadcrumb.Page = ContentModule.Breadcrumb.Item.extend({
 	title: 'test',
 	tagName: 'a',
 	href: '#',
+
 	// TODO Don't need to bind here actually
 	attributeBindings: ['href'],
 	template: SC.Handlebars.compile('{{view ContentModule.Button label="Inspect"}} Page'),
@@ -350,11 +352,19 @@ ContentModule.PreviewController = SC.Object.create({
 	}
 });
 
+/**
+ * Contains ContentModule.Block type
+ */
 ContentModule.ChangesController = SC.ArrayProxy.create({
 	content: [],
 
-	addChange: function(change) {
-		this.pushObject(change);
+	addChange: function(block) {
+		if (!this.contains(block)) {
+			this.pushObject(block);
+		}
+	},
+	removeChange: function(block) {
+		this.removeObject(block);
 	},
 
 	noChanges: function() {
@@ -362,8 +372,9 @@ ContentModule.ChangesController = SC.ArrayProxy.create({
 	}.property('length'),
 
 	revert: function() {
-		this.set('[]', []); // Reset all changes
-		window.location.reload();
+		this.forEach(function(block) {
+			block.revertChanges();
+		}, this);
 	}
 });
 
@@ -435,10 +446,36 @@ ContentModule.propertyTypeMap = {
 ContentModule.Block = SC.Object.extend({
 	alohaBlockId: null,
 	_title:null,
+	_originalValues: null,
+
+	// Some hack which is fired when we change a property. Should be replaced with a proper API method which should be fired *every time* a property is changed.
+	_somePropertyChanged: function(that, propertyName) {
+		var alohaBlock = Aloha.Block.BlockManager.getBlock(this.get('alohaBlockId'));
+		alohaBlock.attr(propertyName, this.get(propertyName));
+
+		var hasChanges = false;
+		$.each(this._originalValues, function(key, value) {
+			if (that.get(key) !== value) {
+				hasChanges = true;
+			}
+		});
+		if (hasChanges) {
+			ContentModule.ChangesController.addChange(this);
+		} else {
+			ContentModule.ChangesController.removeChange(this);
+		}
+	},
 	schema: function() {
 		var alohaBlock = Aloha.Block.BlockManager.getBlock(this.get('alohaBlockId'));
 		return alohaBlock.getSchema();
-	}.property()
+	}.property().cacheable(),
+
+	revertChanges: function() {
+		var that = this;
+		$.each(this._originalValues, function(key, oldValue) {
+			that.set(key, oldValue);
+		});
+	}
 });
 
 ContentModule.BlockManager = SC.Object.create({
@@ -451,14 +488,31 @@ ContentModule.BlockManager = SC.Object.create({
 		if (this._blocks[blockId]) {
 			return this._blocks[blockId];
 		}
-		var blockProxy = ContentModule.Block.create({
-			alohaBlockId: blockId,
-			_title: alohaBlock.title
-		});
+
 		var attributes = alohaBlock.attr();
-		$.each(attributes, function(key, value) {
-			blockProxy.set(key, value);
-		});
+
+		var blockProxy = ContentModule.Block.create($.extend({}, attributes, {
+			alohaBlockId: blockId,
+			_title: alohaBlock.title,
+			_originalValues: null,
+			init: function() {
+				var that = this;
+				this._originalValues = {};
+
+				// HACK: Add observer for each element, as we do not know how to add one observer for *all* elements.
+				$.each(attributes, function(key, value) {
+
+					// HACK: This is for supporting more data types, i.e. mostly for boolean values in checkboxes.
+					if (value == "true") {
+						value = true;
+					} else if (value == "false") {
+						value = false;
+					}
+					that._originalValues[key] = value;
+					that.addObserver(key, that, that._somePropertyChanged);
+				});
+			}
+		}));
 
 		this._blocks[blockId] = blockProxy;
 		return this._blocks[blockId];
@@ -472,12 +526,7 @@ SC.$(document).ready(function() {
 Handlebars.registerHelper('propertyEditWidget', function(x) {
 	var contextData = this.get('content');
 
-	var block = ContentModule.BlockSelectionController.get('selectedBlock');
-
-	var classPath = ContentModule.propertyTypeMap[contextData.type];
-
-//	var val = block.get(contextData.key);
-//	console.log("oldVal", block, val);
+	var viewClassPath = ContentModule.propertyTypeMap[contextData.type];
 
 	// todo: understand all options and clean
 	var options = {
@@ -485,20 +534,12 @@ Handlebars.registerHelper('propertyEditWidget', function(x) {
 			view: this
 		},
 		hash: {
-			'class': contextData.key,
-				// todo: set block attributes into SC object to bind value here
-			//value: val,
-			/*theValueChange: function() {
-				//console.log(block.get(contextData.key), "XX");
-				//var val = this.get('value');
-				//console.log(block);
-				//block.set(contextData.key, val);
-			}.observes('value')*/
-			valueBinding: "ContentModule.BlockSelectionController.selectedBlock." + contextData.key //block.get(contextData.key)
+			"class": contextData.key,
+			valueBinding: "ContentModule.BlockSelectionController.selectedBlock." + contextData.key
 		}
 	};
 
-	return SC.Handlebars.ViewHelper.helper(this, classPath, options);
+	return SC.Handlebars.ViewHelper.helper(this, viewClassPath, options);
 });
 
 Handlebars.registerHelper("debug", function(optionalValue) {
