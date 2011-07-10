@@ -331,6 +331,9 @@ ContentModule.PreviewController = SC.Object.create({
 			$('#t3-ui-rightarea').animate({
 				width: 0
 			}, 'fast', allDone);
+			$('body').animate({
+				'margin-right': 0
+			}, 'fast', allDone);
 		} else {
 			$('body').animate({
 				'margin-top': 55,
@@ -346,6 +349,9 @@ ContentModule.PreviewController = SC.Object.create({
 			$('#t3-ui-top').slideDown('fast', allDone);
 			$('#t3-ui-rightarea').animate({
 				width: 200
+			}, 'fast', allDone);
+			$('body').animate({
+				'margin-right': 200
 			}, 'fast', allDone);
 		}
 		this.set('previewMode', pressed);
