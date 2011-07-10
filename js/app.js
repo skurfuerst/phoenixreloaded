@@ -194,7 +194,7 @@ T3.Common.Launcher.Panel = SC.View.extend({
 
 ContentModule.Breadcrumb = SC.View.extend({
 	tagName: 'div',
-	classNames: ['t3-breadcrumb', 'aloha-block-do-not-deactivate'],
+	classNames: ['t3-breadcrumb'],
 	template: SC.Handlebars.compile('\
 <div class="t3-breadcrumb-page">\
   {{view ContentModule.Breadcrumb.Page}}\
