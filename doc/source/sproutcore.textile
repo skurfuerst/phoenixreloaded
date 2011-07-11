@@ -1,0 +1,12 @@
+h2. SproutCore Tips and Tricks
+
+After reading this guide, you will be able to:
+
+* Gain a better understanding of SproutCore.
+
+endprologue.
+
+
+h3. Changelog
+
+* July 11, 2011: Initial version by "Sebastian Kurfürst":credits.html#skurfuerst

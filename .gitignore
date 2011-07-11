@@ -1,2 +1,4 @@
 nbproject
 /css/.sass-cache/
+doc/staging
+.DS_Store

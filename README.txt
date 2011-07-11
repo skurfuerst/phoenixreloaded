@@ -25,6 +25,20 @@ git checkout master
 git pull
 cd ../../../../../../
 
+Guides
+------
+
+For development guides, we (for now) use the "guides" gem:
+
+> sudo gem install guides
+
+Then, follow these steps to render a guide:
+
+> cd doc
+> guides preview
+# now open your browser at http://localhost:9292
+
+
 Structure
 ---------
 
