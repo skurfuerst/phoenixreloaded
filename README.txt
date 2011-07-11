@@ -12,6 +12,19 @@ How to Clone (read-only)
 git clone --recursive git://github.com/skurfuerst/phoenixreloaded.git
 
 
+How to update
+-------------
+
+After updating the main project, also update aloha with the following commands:
+
+cd js/libs/aloha
+git checkout dev-blocks
+git pull
+cd src/plugins/common
+git checkout master
+git pull
+cd ../../../../../../
+
 Structure
 ---------
 
@@ -24,12 +37,10 @@ js/alohaplugins/phoenixintegration/ <-- Aloha integration plugin
 
 js/lib <-- dependencies. DO NOT TOUCH
 
-js/app.js <-- main sproutcore App
-
 ToDo List
 ---------
 
-* *T1* Dependency Management with RequireJS (investigate how to load Aloha *and* custom stuff using RequireJS, i.e. how to use RequireJS twice on website)
+* DONE: *T1* Dependency Management with RequireJS (investigate how to load Aloha *and* custom stuff using RequireJS, i.e. how to use RequireJS twice on website)
 * T2 Fix SproutCore right bar issue, and remove quickfix at sproutcore.js:line 1565
 * T3 Save Aloha-Content back to model (needs B1)
 * *T4* Connect to Phoenix Backend
