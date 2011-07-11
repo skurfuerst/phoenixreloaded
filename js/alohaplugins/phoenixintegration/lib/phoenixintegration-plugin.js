@@ -10,7 +10,7 @@ function(Plugin, block, BlockManager) {
         	require(['block/blockmanager'], function(BlockManager) {
 				BlockManager.registerBlockType('TextBlock', block.TextBlock);
 				BlockManager.registerBlockType('PluginBlock', block.PluginBlock);
-        		BlockManager.bind('block-selection-change', ContentModule._onBlockSelectionChange, ContentModule);
+        		BlockManager.bind('block-selection-change', T3.ContentModule._onBlockSelectionChange, T3.ContentModule);
 
 				Aloha.bind("aloha-editable-deactivated", that._onEditableChange);
 				Aloha.bind("aloha-smart-content-changed", that._onEditableChange);
