@@ -52,3 +52,11 @@ Aloha Blocks
 * B2 rename element to $element in block.js
 * B3 refactor Templateable Blocks into a mixin
 
+
+Links to learn about SproutCore 2
+---------------------------------
+
+* http://guides.sproutcore20.com/
+* http://docs.sproutcore20.com/
+* Read the source at https://github.com/skurfuerst/phoenixreloaded/blob/master/js/libs/sproutcore.js - very well readable in general, searching stuff if quite easy,
+  quite some good doc comments
