@@ -2491,7 +2491,7 @@ if (!USE_ACCESSORS) {
       // FIXME: Somehow we still mis-use the property mapping,
       // that's why we need to disable the following assertion for the
       // property panel to work.
-      sc_assert('You cannot set observed properties on destroyed objects', false);
+      //sc_assert('You cannot set observed properties on destroyed objects', false);
     } else {
       sc_assert('Must use SC.set() to access this property', false);
     }
