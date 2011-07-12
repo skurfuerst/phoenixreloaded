@@ -5,7 +5,7 @@
  */
 
 define(
-['phoenix/fixture', 'text!phoenix/common/launcher.template'],
+['phoenix/fixture', 'text!phoenix/common/launcher.html'],
 function(fixture, launcherTemplate) {
 
 	var T3 = window.T3 || {};

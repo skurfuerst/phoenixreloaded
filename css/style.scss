@@ -216,7 +216,9 @@ ul.t3-topbar {
 	float: right;
 	height: 100%;
 	line-height: $toolbar-height;
-	margin-right: 20px;
+	> li:last-child {
+		margin-right: 10px;
+	}
 }
 .t3-toolbar-left li,
 .t3-toolbar-right li {

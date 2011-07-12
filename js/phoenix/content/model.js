@@ -7,7 +7,7 @@
  */
 
 define(
-['text!phoenix/common/launcher.template'],
+['text!phoenix/common/launcher.html'],
 function(launcherTemplate) {
 
 	var T3 = window.T3 || {};

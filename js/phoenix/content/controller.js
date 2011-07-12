@@ -39,13 +39,14 @@ function() {
 					right: 0
 				}, 'fast', allDone);
 				$('#t3-ui-top').slideUp('fast', allDone);
-				$('#t3-ui-rightarea').animate({
+				$('#t3-rightarea').animate({
 					width: 0
 				}, 'fast', allDone);
 				$('body').animate({
 					'margin-right': 0
 				}, 'fast', allDone);
 			} else {
+				// TODO Store initial sizes and reuse, to remove concrete values
 				$('body').animate({
 					'margin-top': 55,
 					'margin-right': 200
@@ -54,11 +55,11 @@ function() {
 					height: 30
 				}, 'fast', allDone);
 				$('#t3-toolbar').animate({
-					top: 45,
+					top: 50,
 					right: 200
 				}, 'fast', allDone);
 				$('#t3-ui-top').slideDown('fast', allDone);
-				$('#t3-ui-rightarea').animate({
+				$('#t3-rightarea').animate({
 					width: 200
 				}, 'fast', allDone);
 				$('body').animate({

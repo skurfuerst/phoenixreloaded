@@ -6,9 +6,9 @@
 
 define(
 [
-	'text!phoenix/content/ui/toolbar.template',
-	'text!phoenix/content/ui/breadcrumb.template',
-	'text!phoenix/content/ui/propertypanel.template',
+	'text!phoenix/content/ui/toolbar.html',
+	'text!phoenix/content/ui/breadcrumb.html',
+	'text!phoenix/content/ui/propertypanel.html',
 ],
 function(toolbarTemplate, breadcrumbTemplate, propertyPanelTemplate) {
 	var T3 = window.T3 || {};
