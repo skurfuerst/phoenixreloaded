@@ -6,6 +6,70 @@ After reading this guide, you will be able to:
 
 endprologue.
 
+h3. Creation of objects
+
+* Always extend from +SC.Object+ (or a subclass)
+* Extension is done using +SC.Object.extend({...})+
+* Never use @new@ to instanciate new objects. Instead, use +TheObject.create(...)+
+* All objects have generic +set(key, value)+ and +get(key)+ methods, *which should be used
+  under all circumstances!
+
+The following example shows this:
+
+<javascript>
+var Foo = SC.Object.extend({
+	someValue: 'hello',
+	myMethod: function() {
+		alert(this.get('someValue'));
+	}
+});
+
+var fooInstance = Foo.create({
+	someValue: 'world'
+});
+fooInstance.myMethod(); // outputs "world"
+</javascript>
+
+
+h3. Data Binding tips and tricks
+
+To create a *computed property*, implement it as function and append +.property()+:
+
+<javascript>
+var Foo = SC.Object.extend({
+	someComputedValue: function() {
+		return "myMethod";
+	}.property()
+
+});
+</javascript>
+
+If your computed property reads other values, specify the dependent values as
+parameters to @property()@. If the computed property is deterministic and depends only on the
+dependant values, it should be marked further with @.cacheable()@.
+
+<javascript>
+var Foo = SC.Object.extend({
+	name: 'world',
+	greeting: function() {
+		return "Hello " + this.attr('name');
+	}.property('name').cacheable()
+
+});
+</javascript>
+
+Now, every time @name@ changes, the system re-evaluates @greeting@.
+
+NOTE: Forgetting @.cacheable()@ can have severe performance improvements and result
+      in circular loops, in worst case freezing the browser completely.
+
+h4. Views and Bindings
+
+WARNING: Not yet 100% clear yet
+
+TODO: Document the "fooBinding: "... stuff
+
+TODO: @Christopher: Document the ".observes()" stuff.
 
 h3. Changelog
 
