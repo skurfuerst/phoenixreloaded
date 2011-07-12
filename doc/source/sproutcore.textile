@@ -6,13 +6,13 @@ After reading this guide, you will be able to:
 
 endprologue.
 
-h3. Creation of objects
+h3. Dealing with classes and objects
 
 * Always extend from +SC.Object+ (or a subclass)
 * Extension is done using +SC.Object.extend({...})+
 * Never use @new@ to instanciate new objects. Instead, use +TheObject.create(...)+
 * All objects have generic +set(key, value)+ and +get(key)+ methods, *which should be used
-  under all circumstances!
+  under all circumstances*!
 
 The following example shows this:
 
@@ -30,6 +30,24 @@ var fooInstance = Foo.create({
 fooInstance.myMethod(); // outputs "world"
 </javascript>
 
+Inheritance can be used just as in PHP, since Sproutcure binds a special +._super()+ function for every
+method call (in fact the function is wrapped to create this special @_super@ method). So calling the current method
+of the superclass can be done without specifying the superclass and method name.
+
+<javascript>
+var Foo = SC.Object.extend({
+	greet: function(name) {
+		return 'Hello, ' + name;
+	}
+});
+var Bar = Foo.extend({
+	greet: function(name) {
+		return 'Aloha and ' + this._super(name);
+	}
+});
+
+Bar.create().greet('Phoenix'); // outputs "Aloha and Hello, Phoenix"
+</javascript>
 
 h3. Data Binding tips and tricks
 
@@ -69,8 +87,21 @@ WARNING: Not yet 100% clear yet
 
 TODO: Document the "fooBinding: "... stuff
 
-TODO: @Christopher: Document the ".observes()" stuff.
+h4. Observe changes
+
+To react on changes of properties in models or views (or any other class extending @SC.Observable@), a method marked as an observer can be used. Call
+@.observes('propertyName')@ on a private method to be notified whenever a property changes.
+
+<javascript>
+var Foo = SC.Object.extend({
+	name: 'world',
+	_nameDidChange: function() {
+		console.log('name changed to', this.get('name'));
+	}.observes('name')
+});
+</javascript>
 
 h3. Changelog
 
 * July 11, 2011: Initial version by "Sebastian Kurfürst":credits.html#skurfuerst
+* July 11, 2011: Some more insight from "Christopher Hlubek":credits.html#hlubek

@@ -70,12 +70,12 @@
 </ul>
 
           </div>
-        <h3 id="creation-of-objects">1 Creation of objects</h3>
+        <h3 id="dealing-with-classes-and-objects">1 Dealing with classes and objects</h3>
 <ul>
 	<li>Always extend from <tt>SC.Object</tt> (or a subclass)</li>
 	<li>Extension is done using <tt>SC.Object.extend({...})</tt></li>
 	<li>Never use <code>new</code> to instanciate new objects. Instead, use <tt>TheObject.create(...)</tt></li>
-	<li>All objects have generic <tt>set(key, value)</tt> and <tt>get(key)</tt> methods, *which should be used   under all circumstances!</li>
+	<li>All objects have generic <tt>set(key, value)</tt> and <tt>get(key)</tt> methods, <strong>which should be used   under all circumstances</strong>!</li>
 </ul>
 <p>The following example shows this:</p>
 <div class="code_container">
@@ -92,6 +92,22 @@ var fooInstance = Foo.create({
 	someValue: 'world'
 });
 fooInstance.myMethod(); // outputs &quot;world&quot;
+</pre></div><p>Inheritance can be used just as in <span class="caps">PHP</span>, since Sproutcure binds a special <tt>._super()</tt> function for every method call (in fact the function is wrapped to create this special <code>_super</code> method). So calling the current method of the superclass can be done without specifying the superclass and method name.</p>
+<div class="code_container">
+<pre class="brush: javascript; gutter: false; toolbar: false">
+
+var Foo = SC.Object.extend({
+	greet: function(name) {
+		return 'Hello, ' + name;
+	}
+});
+var Bar = Foo.extend({
+	greet: function(name) {
+		return 'Aloha and ' + this._super(name);
+	}
+});
+
+Bar.create().greet('Phoenix'); // outputs &quot;Aloha and Hello, Phoenix&quot;
 </pre></div><h3 id="data-binding-tips-and-tricks">2 Data Binding tips and tricks</h3>
 <p>To create a <strong>computed property</strong>, implement it as function and append <tt>.property()</tt>:</p>
 <div class="code_container">
@@ -119,19 +135,31 @@ var Foo = SC.Object.extend({
 <h4 id="views-and-bindings">2.1 Views and Bindings</h4>
 <div class="warning"><p>Not yet 100% clear yet</p></div>
 <p><span class="caps">TODO</span>: Document the &quot;fooBinding: &quot;&#8230; stuff</p>
-<p><span class="caps">TODO</span>: @Christopher: Document the &#8220;.observes()&#8221; stuff.</p>
-<h3 id="changelog">3 Changelog</h3>
+<h4 id="observe-changes">2.2 Observe changes</h4>
+<p>To react on changes of properties in models or views (or any other class extending <code>SC.Observable</code>), a method marked as an observer can be used. Call <code>.observes('propertyName')</code> on a private method to be notified whenever a property changes.</p>
+<div class="code_container">
+<pre class="brush: javascript; gutter: false; toolbar: false">
+
+var Foo = SC.Object.extend({
+	name: 'world',
+	_nameDidChange: function() {
+		console.log('name changed to', this.get('name'));
+	}.observes('name')
+});
+</pre></div><h3 id="changelog">3 Changelog</h3>
 <ul>
 	<li>July 11, 2011: Initial version by <a href="credits.html#skurfuerst">Sebastian Kurfürst</a></li>
+	<li>July 11, 2011: Some more insight from <a href="credits.html#hlubek">Christopher Hlubek</a></li>
 </ul>
 
       </div>
         <div id="subCol">
           <h3 class="chapter"><img src="images/strobe/chapters.png" alt="" />Chapters</h3>
           <ol class="chapters">
-            <li><a href="#creation-of-objects"><p>Creation of objects</p>
+            <li><a href="#dealing-with-classes-and-objects"><p>Dealing with classes and objects</p>
 </a></li><li><a href="#data-binding-tips-and-tricks"><p>Data Binding tips and tricks</p>
 </a><ul><li><a href="#views-and-bindings"><p>Views and Bindings</p>
+</a></li> <li><a href="#observe-changes"><p>Observe changes</p>
 </a></li></ul></li><li><a href="#changelog"><p>Changelog</p>
 </a></li>
           </ol>
