@@ -55,6 +55,19 @@ function(launcherTemplate) {
 			$.each(this._originalValues, function(key, oldValue) {
 				that.set(key, oldValue);
 			});
+		},
+
+		/**
+		 * Returns a simple JSON object containing the simple and cleaned
+		 * attributes for the block
+		 */
+		getCleanedUpAttributes: function() {
+			var that = this, cleanedAttributes = {};
+			$.each(this._originalValues, function(key) {
+				cleanedAttributes[key] = that.get(key);
+			});
+
+			return cleanedAttributes;
 		}
 	});
 
@@ -184,9 +197,13 @@ function(launcherTemplate) {
 	 * T3.Content.Model.Changes
 	 *
 	 * Contains a list of Blocks which contain changes.
+	 *
+	 * TODO: On saving, should empty local storage!
 	 */
 	var Changes = SC.ArrayProxy.create({
 		content: [],
+
+		_loadedFromLocalStore: false,
 
 		addChange: function(block) {
 			if (!this.contains(block)) {
@@ -201,10 +218,59 @@ function(launcherTemplate) {
 			return this.get('length') == 0;
 		}.property('length'),
 
+		_readFromLocalStore: function() {
+			if (!this._supports_html5_storage()) return;
+
+			var serializedBlocks = window.localStorage['page_' + $('body').attr('about')];
+
+			if (serializedBlocks) {
+				var blocks = JSON.parse(serializedBlocks);
+				blocks.forEach(function(serializedBlock) {
+					var alohaBlock = Aloha.Block.BlockManager.getBlock($('[about="' + serializedBlock.about + '"]'));
+					if (alohaBlock) {
+						var blockProxy = T3.Content.Model.BlockManager.getBlockProxy(alohaBlock);
+						$.each(serializedBlock, function(k, v) {
+							blockProxy.set(k, v);
+						});
+					} else {
+						// TODO: warning: Somehow the block was not found on the page anymore
+					}
+				});
+			}
+			this._loadedFromLocalStore = true;
+		},
+
+		_saveToLocalStore: function() {
+			if (!this._supports_html5_storage()) return;
+			if (!this._loadedFromLocalStore) return;
+
+			var cleanedUpBlocks = this.get('[]').map(function(block) {
+				return block.getCleanedUpAttributes();
+			});
+
+			window.localStorage['page_' + $('body').attr('about')] = JSON.stringify(cleanedUpBlocks);
+		}.observes('[]'),
+
+		_supports_html5_storage: function() {
+			try {
+				return 'localStorage' in window && window['localStorage'] !== null;
+			} catch (e) {
+				return false;
+			}
+		},
+
 		revert: function() {
 			this.forEach(function(block) {
 				block.revertChanges();
 			}, this);
+		},
+		save: function() {
+			// TODO: send changes to server side
+
+			// TODO: for each block, record current state as "original"
+
+			// Flush local changes
+			this.set('[]', []);
 		}
 	});
 

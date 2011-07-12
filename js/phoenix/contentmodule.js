@@ -15,12 +15,26 @@ function() {
 
 	var T3 = window.T3 || {};
 	var ContentModule = SC.Application.create({
+
 		bootstrap: function() {
 			this._initializePropertyPanel();
 			this._initializeToolbar();
 			this._initializeFooter();
 			this._initializeLauncher();
 
+			// When aloha is loaded, blockify our content.
+			// TODO: Later, we will only have one generic TYPO3-AlohaBlock here
+			// instead of multiple ones.
+			Aloha.bind('aloha', function() {
+				$('.t3-plugin').alohaBlock({
+					'block-type': 'PluginBlock'
+				});
+
+				$('.t3-text').alohaBlock({
+					'block-type': 'TextBlock'
+				});
+				T3.Content.Model.Changes._readFromLocalStore();
+			});
 			 // TODO: should be only set when header and property panel is visible
 			$('body').addClass('t3-ui-controls-active');
 			$('body').addClass('t3-backend');
@@ -59,7 +73,9 @@ function() {
 					}),
 					T3.Content.UI.Button.extend({
 						label: 'Save',
-						disabledBinding: 'T3.Content.Model.Changes.noChanges'
+						disabledBinding: 'T3.Content.Model.Changes.noChanges',
+						target: 'T3.Content.Model.Changes',
+						action: 'save'
 					})
 				]
 			});

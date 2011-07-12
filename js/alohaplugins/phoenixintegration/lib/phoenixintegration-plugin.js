@@ -1,16 +1,17 @@
 define(
-['core/plugin', 'phoenixintegration/block', 'block/blockmanager'],
-function(Plugin, block, BlockManager) {
+['core/plugin', 'phoenixintegration/block', 'block/blockmanager', 'require'],
+function(Plugin, block, BlockManager, require) {
     "use strict";
 
     var PhoenixPlugin = Plugin.create('phoenixintegration', {
     	dependencies: ['block'],
         init: function() {
 			var that = this;
-        	require(['block/blockmanager'], function(BlockManager) {
-				BlockManager.registerBlockType('TextBlock', block.TextBlock);
-				BlockManager.registerBlockType('PluginBlock', block.PluginBlock);
-        		BlockManager.bind('block-selection-change', T3.ContentModule._onBlockSelectionChange, T3.ContentModule);
+			BlockManager.registerBlockType('TextBlock', block.TextBlock);
+			BlockManager.registerBlockType('PluginBlock', block.PluginBlock);
+
+        	require(['phoenix/contentmodule'], function() {
+				BlockManager.bind('block-selection-change', T3.ContentModule._onBlockSelectionChange, T3.ContentModule);
 
 				Aloha.bind("aloha-editable-deactivated", that._onEditableChange);
 				Aloha.bind("aloha-smart-content-changed", that._onEditableChange);
