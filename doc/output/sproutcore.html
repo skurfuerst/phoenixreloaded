@@ -70,7 +70,57 @@
 </ul>
 
           </div>
-        <h3 id="changelog">1 Changelog</h3>
+        <h3 id="creation-of-objects">1 Creation of objects</h3>
+<ul>
+	<li>Always extend from <tt>SC.Object</tt> (or a subclass)</li>
+	<li>Extension is done using <tt>SC.Object.extend({...})</tt></li>
+	<li>Never use <code>new</code> to instanciate new objects. Instead, use <tt>TheObject.create(...)</tt></li>
+	<li>All objects have generic <tt>set(key, value)</tt> and <tt>get(key)</tt> methods, *which should be used   under all circumstances!</li>
+</ul>
+<p>The following example shows this:</p>
+<div class="code_container">
+<pre class="brush: javascript; gutter: false; toolbar: false">
+
+var Foo = SC.Object.extend({
+	someValue: 'hello',
+	myMethod: function() {
+		alert(this.get('someValue'));
+	}
+});
+
+var fooInstance = Foo.create({
+	someValue: 'world'
+});
+fooInstance.myMethod(); // outputs &quot;world&quot;
+</pre></div><h3 id="data-binding-tips-and-tricks">2 Data Binding tips and tricks</h3>
+<p>To create a <strong>computed property</strong>, implement it as function and append <tt>.property()</tt>:</p>
+<div class="code_container">
+<pre class="brush: javascript; gutter: false; toolbar: false">
+
+var Foo = SC.Object.extend({
+	someComputedValue: function() {
+		return &quot;myMethod&quot;;
+	}.property()
+
+});
+</pre></div><p>If your computed property reads other values, specify the dependent values as parameters to <code>property()</code>. If the computed property is deterministic and depends only on the dependant values, it should be marked further with <code>.cacheable()</code>.</p>
+<div class="code_container">
+<pre class="brush: javascript; gutter: false; toolbar: false">
+
+var Foo = SC.Object.extend({
+	name: 'world',
+	greeting: function() {
+		return &quot;Hello &quot; + this.attr('name');
+	}.property('name').cacheable()
+
+});
+</pre></div><p>Now, every time <code>name</code> changes, the system re-evaluates <code>greeting</code>.</p>
+<div class="note"><p>Forgetting <code>.cacheable()</code> can have severe performance improvements and result in circular loops, in worst case freezing the browser completely.</p></div>
+<h4 id="views-and-bindings">2.1 Views and Bindings</h4>
+<div class="warning"><p>Not yet 100% clear yet</p></div>
+<p><span class="caps">TODO</span>: Document the &quot;fooBinding: &quot;&#8230; stuff</p>
+<p><span class="caps">TODO</span>: @Christopher: Document the &#8220;.observes()&#8221; stuff.</p>
+<h3 id="changelog">3 Changelog</h3>
 <ul>
 	<li>July 11, 2011: Initial version by <a href="credits.html#skurfuerst">Sebastian Kurfürst</a></li>
 </ul>
@@ -79,7 +129,10 @@
         <div id="subCol">
           <h3 class="chapter"><img src="images/strobe/chapters.png" alt="" />Chapters</h3>
           <ol class="chapters">
-            <li><a href="#changelog"><p>Changelog</p>
+            <li><a href="#creation-of-objects"><p>Creation of objects</p>
+</a></li><li><a href="#data-binding-tips-and-tricks"><p>Data Binding tips and tricks</p>
+</a><ul><li><a href="#views-and-bindings"><p>Views and Bindings</p>
+</a></li></ul></li><li><a href="#changelog"><p>Changelog</p>
 </a></li>
           </ol>
         </div>

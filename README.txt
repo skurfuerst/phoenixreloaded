@@ -28,6 +28,8 @@ cd ../../../../../../
 Guides
 ------
 
+*** Make sure to check out "doc/output" for further documentation***
+
 For development guides, we (for now) use the "guides" gem:
 
 > sudo gem install guides
@@ -36,7 +38,7 @@ Then, follow these steps to render a guide:
 
 > cd doc
 > guides preview
-# now open your browser at http://localhost:9292
+Ø# now open your browser at http://localhost:9292
 
 
 Structure
